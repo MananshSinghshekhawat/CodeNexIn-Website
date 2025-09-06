@@ -7,7 +7,8 @@ const chatbotSchema = new mongoose.Schema({
   response: {type: String, required: true},
   timestamp: {type: Date, default: Date.now},
   intent: String,
-  metadata: { sentiment: String, context: object}
+  metadata: { sentiment: String, context: Object}
 });
 
 module.exports = mongoose.model("Chatbot", chatbotSchema);
+
