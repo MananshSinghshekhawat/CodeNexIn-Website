@@ -6,7 +6,7 @@ const adminSchema = new mongoose.Schema({
   email : {type: String, required: true, unique: true},
   password : {type: String, required: true},
   role : {type: String, enum: ["superadmin", "editor", "moderator"], default: "editor"},
-  created_at: {typye: Date, default: Date.now},
+  created_at: {type: Date, default: Date.now},
   last_login: {type: Date},
   status: {type: String, enum: ["active", "inactive"], default: "active"}
 });
@@ -20,3 +20,4 @@ adminSchema.pre('save', async function(next) {
 });
 
 module.exports = mongoose.model("Admin", adminSchema);
+
