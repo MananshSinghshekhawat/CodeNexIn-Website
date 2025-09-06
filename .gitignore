@@ -16,7 +16,7 @@ pids
 *.seed
 *.pid.lock
 
-# Coverage directory used by tools like istanbul
+# Coverage directory
 coverage/
 
 # OS generated files
@@ -26,4 +26,12 @@ coverage/
 .Spotlight-V100
 .Trashes
 ehthumbs.db
-Thumbs.dbs
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+
+# Temporary files
+tmp/
+temp/
