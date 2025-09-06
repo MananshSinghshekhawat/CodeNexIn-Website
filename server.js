@@ -22,7 +22,7 @@ app.use('/api/home', require('./routes/home'));
 app.use('/api/testimonials', require('./routes/testimonials'));
 app.use('/api/blogs', require('./routes/blogs'));
 app.use('/api/clients', require('./routes/clients'));
-
+app.use('/api/about', require('./routes/about'));
 // Basic route
 app.get('/', (req, res) => {
   res.json({ 
