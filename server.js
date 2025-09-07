@@ -18,7 +18,6 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/codenexin
 .catch(err => console.log('❌ MongoDB connection error:', err));
 
 // Routes
-app.use("/api/users", require("./routes/users"));
 app.use('/api/home', require('./routes/home'));
 app.use('/api/testimonials', require('./routes/testimonials'));
 app.use('/api/blogs', require('./routes/blogs'));
