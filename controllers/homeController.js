@@ -16,8 +16,8 @@ exports.getHomeContent = async (req, res) => {
     const latestBlogs = await Blog.find({ isPublished: true })
       .sort({ publishedAt: -1 })
       .limit(3)
-      .select('title excerpt slug featuredImage readTime publishedAt')
-      .populate('author', 'name email'); // ✅ Only safe fields
+      .select('title excerpt slug featuredImage readTime publishedAt author');
+
 
     const clients = await Client.find({ isActive: true, isFeatured: true })
       .sort({ order: 1 })
