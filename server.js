@@ -14,16 +14,25 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/codenexin
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
-.then(() => console.log('✅ MongoDB connected successfully'))
-.catch(err => console.log('❌ MongoDB connection error:', err));
+.then(() => console.log(' MongoDB connected successfully'))
+.catch(err => console.log(' MongoDB connection error:', err));
+
+// Import routes
+const homeRoutes = require('./routes/home');
+const testimonialRoutes = require('./routes/testimonials');
+const blogRoutes = require('./routes/blogs');
+const clientRoutes = require('./routes/clients');
+const aboutRoutes = require('./routes/about');
+const serviceRoutes = require('./routes/services');
 
 // Routes
-app.use('/api/home', require('./routes/home'));
-app.use('/api/testimonials', require('./routes/testimonials'));
-app.use('/api/blogs', require('./routes/blogs'));
-app.use('/api/clients', require('./routes/clients'));
-app.use('/api/about', require('./routes/about'));
-app.use('/api/services', require('./routes/services'));
+app.use('/api/home', homeRoutes);
+app.use('/api/testimonials', testimonialRoutes);
+app.use('/api/blogs', blogRoutes);
+app.use('/api/clients', clientRoutes);
+app.use('/api/about', aboutRoutes);
+app.use('/api/services', serviceRoutes);
+
 // Basic route
 app.get('/', (req, res) => {
   res.json({ 
@@ -32,6 +41,8 @@ app.get('/', (req, res) => {
     status: 'OK',
     endpoints: {
       home: '/api/home',
+      about: '/api/about',
+      services: '/api/services',
       testimonials: '/api/testimonials',
       blogs: '/api/blogs',
       clients: '/api/clients'
@@ -42,7 +53,7 @@ app.get('/', (req, res) => {
 // Health check route
 app.get('/health', (req, res) => {
   res.json({ 
-    status: 'Server is healthy ✅',
+    status: 'Server is healthy ',
     timestamp: new Date().toISOString(),
     uptime: process.uptime()
   });
@@ -69,10 +80,12 @@ app.use('*', (req, res) => {
 // Start server
 app.listen(PORT, () => {
   console.log('\n✨ ========================================');
-  console.log(' CodeNexIn Backend Server Started');
-  console.log(' ========================================');
-  console.log(` Local: http://localhost:${PORT}`);
-  console.log(` Home API: http://localhost:${PORT}/api/home`);
-  console.log(` Health: http://localhost:${PORT}/health`);
-  console.log(' ========================================\n');
+  console.log('🚀 CodeNexIn Backend Server Started');
+  console.log('✨ ========================================');
+  console.log(`📍 Local: http://localhost:${PORT}`);
+  console.log(`🏠 Home API: http://localhost:${PORT}/api/home`);
+  console.log(`📖 About API: http://localhost:${PORT}/api/about`);
+  console.log(`🛠️ Services API: http://localhost:${PORT}/api/services`);
+  console.log(`❤️ Health: http://localhost:${PORT}/health`);
+  console.log('✨ ========================================\n');
 });
