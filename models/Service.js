@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const serviceSchema = new mongoose.Schema({
+<<<<<<< HEAD
   heroSection: {
     title: {
       type: String,
@@ -162,6 +163,12 @@ const serviceSchema = new mongoose.Schema({
   }
 }, {
   timestamps: true
+=======
+  title: { type: String, required: true },
+  description: { type: String, required: true },
+  icon: { type: String },
+  features: [String]
+>>>>>>> 6cb3f7d4e22dc1722494a7c46850d50ebedbf96e
 });
 
 // Generate slug from title before saving
@@ -177,9 +184,13 @@ serviceSchema.pre('save', function(next) {
   next();
 });
 
+<<<<<<< HEAD
 // Only one service document should exist
 serviceSchema.statics.getServicesContent = function() {
   return this.findOne().sort({ createdAt: -1 });
 };
 
 module.exports = mongoose.model('Service', serviceSchema);
+=======
+
+>>>>>>> 6cb3f7d4e22dc1722494a7c46850d50ebedbf96e

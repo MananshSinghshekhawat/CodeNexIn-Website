@@ -2,8 +2,488 @@ const mongoose = require('mongoose');
 const Home = require('../models/Home');
 const Client = require('../models/Client');
 const Testimonial = require('../models/Testimonial');
+const About = require('../models/About');
+const Service = require('../models/Service');
 require('dotenv').config();
 
+// Seed About Page Data
+const seedAboutData = async () => {
+  try {
+    await About.deleteMany({});
+
+    const aboutContent = new About({
+      heroSection: {
+        title: "Pioneering Digital Innovation Since 2014",
+        subtitle: "We are a team of passionate technologists, strategists, and innovators committed to transforming businesses through cutting-edge technology solutions."
+      },
+      ourStory: {
+        title: "Our Story",
+        content: "CodeNexIn was founded in 2014 by a group of software engineers who witnessed firsthand the challenges businesses faced in adopting new technologies. We saw companies struggling with outdated systems, inefficient processes, and the inability to harness the power of their data. What started as a small consulting firm has evolved into a comprehensive technology partner, serving clients from startups to Fortune 500 companies.",
+        milestones: [
+          {
+            year: 2014,
+            title: "Foundation",
+            description: "CodeNexIn was founded with a vision to bridge the gap between ideas and digital reality"
+          },
+          {
+            year: 2018,
+            title: "Expansion",
+            description: "Expanded our services to include AI and machine learning solutions"
+          },
+          {
+            year: 2020,
+            title: "Growth",
+            description: "Served our 100th client and expanded our team to 50+ experts"
+          },
+          {
+            year: 2023,
+            title: "Innovation",
+            description: "Launched our proprietary AI-powered analytics platform"
+          }
+        ]
+      },
+      mission: {
+        title: "Our Mission",
+        description: "To empower businesses with innovative technology solutions that drive growth, efficiency, and competitive advantage in the digital age.",
+        principles: [
+          {
+            title: "Excellence in Delivery",
+            description: "We strive for perfection in every project, ensuring solutions that exceed expectations.",
+            icon: "🎯"
+          },
+          {
+            title: "Client-Centric Approach",
+            description: "Our clients' success is our success. We build long-term partnerships based on trust and results.",
+            icon: "🤝"
+          },
+          {
+            title: "Continuous Innovation",
+            description: "We stay at the forefront of technology, constantly learning and adapting to new developments.",
+            icon: "🚀"
+          }
+        ]
+      },
+      vision: {
+        title: "Our Vision",
+        description: "To be the leading catalyst for digital transformation, enabling businesses to thrive in an increasingly technology-driven world."
+      },
+      coreValues: {
+        title: "Our Core Values",
+        description: "The principles that guide everything we do and shape how we work with our clients and each other.",
+        values: [
+          {
+            title: "Innovation",
+            description: "We push boundaries and embrace emerging technologies to deliver cutting-edge solutions.",
+            icon: "💡"
+          },
+          {
+            title: "Quality",
+            description: "Every project is built with the highest standards of code quality and security.",
+            icon: "🏆"
+          },
+          {
+            title: "Collaboration",
+            description: "We work closely with our clients as trusted partners in their digital transformation.",
+            icon: "👥"
+          },
+          {
+            title: "Reliability",
+            description: "Consistent delivery and unwavering commitment to our promises and timelines.",
+            icon: "⏱️"
+          }
+        ]
+      },
+      whyChooseUs: {
+        title: "Why Choose CodeNexIn?",
+        description: "We bring together technical expertise, industry knowledge, and a passion for innovation to deliver exceptional results.",
+        features: [
+          {
+            title: "Proven Expertise",
+            description: "10+ years of experience delivering successful projects across various industries.",
+            icon: "📊",
+            stats: {
+              value: "10+",
+              label: "Years Experience"
+            }
+          },
+          {
+            title: "Full-Stack Solutions",
+            description: "End-to-end development from concept to deployment and ongoing maintenance.",
+            icon: "🛠️",
+            stats: {
+              value: "500+",
+              label: "Projects Completed"
+            }
+          },
+          {
+            title: "Agile Methodology",
+            description: "Fast, iterative development process with continuous client feedback and improvement.",
+            icon: "🔄",
+            stats: {
+              value: "98%",
+              label: "Client Satisfaction"
+            }
+          },
+          {
+            title: "Industry Recognition",
+            description: "Award-winning team recognized for innovation and excellence in software development.",
+            icon: "🏅",
+            stats: {
+              value: "25+",
+              label: "Awards Won"
+            }
+          }
+        ]
+      },
+      teamStats: [
+        {
+          value: "50+",
+          label: "Expert Team Members",
+          icon: "👨‍💻"
+        },
+        {
+          value: "200+",
+          label: "Happy Clients",
+          icon: "😊"
+        },
+        {
+          value: "98%",
+          label: "Client Retention Rate",
+          icon: "📈"
+        },
+        {
+          value: "24/7",
+          label: "Support Available",
+          icon: "🌐"
+        }
+      ],
+      seoMetadata: {
+        title: "About CodeNexIn - Our Story, Mission & Values",
+        description: "Learn about CodeNexIn's journey since 2014, our mission to drive digital transformation, and the core values that guide our work with clients.",
+        keywords: ["about", "company", "story", "mission", "values", "team"]
+      }
+    });
+
+    await aboutContent.save();
+    console.log('About page content created successfully');
+  } catch (error) {
+    console.error('Error seeding about data:', error);
+  }
+};
+
+// Seed Services Page Data
+const seedServicesData = async () => {
+  try {
+    await Service.deleteMany({});
+
+    const servicesContent = new Service({
+      heroSection: {
+        title: "Comprehensive Technology Solutions",
+        subtitle: "From custom software development to AI implementation, we offer a full spectrum of technology services to help your business thrive in the digital age."
+      },
+      services: [
+        {
+          title: "Custom Software Development",
+          slug: "custom-software-development",
+          description: "End-to-end software solutions tailored to your specific business needs and requirements.",
+          icon: "💻",
+          keyFeatures: [
+            "Web Application Development",
+            "Enterprise Software Solutions",
+            "API Development & Integration",
+            "Legacy System Modernization"
+          ],
+          technologies: ["React", "Node.js", "Python", "Java", ".NET"],
+          useCases: [
+            {
+              industry: "Healthcare",
+              description: "Custom EHR systems and patient management solutions"
+            },
+            {
+              industry: "Finance",
+              description: "Secure banking and financial management applications"
+            },
+            {
+              industry: "Retail",
+              description: "E-commerce platforms and inventory management systems"
+            }
+          ],
+          isActive: true,
+          order: 1
+        },
+        {
+          title: "AI & Machine Learning",
+          slug: "ai-machine-learning",
+          description: "Harness the power of artificial intelligence to automate processes and gain insights.",
+          icon: "🤖",
+          keyFeatures: [
+            "Predictive Analytics",
+            "Natural Language Processing",
+            "Computer Vision Solutions",
+            "AI Chatbots & Virtual Assistants"
+          ],
+          technologies: ["TensorFlow", "PyTorch", "OpenAI", "Scikit-learn", "Pandas"],
+          useCases: [
+            {
+              industry: "Healthcare",
+              description: "Medical image analysis and diagnostic assistance"
+            },
+            {
+              industry: "E-commerce",
+              description: "Personalized recommendations and customer behavior prediction"
+            },
+            {
+              industry: "Manufacturing",
+              description: "Predictive maintenance and quality control"
+            }
+          ],
+          isActive: true,
+          order: 2
+        },
+        {
+          title: "Data Analytics & BI",
+          slug: "data-analytics-bi",
+          description: "Transform raw data into actionable insights with advanced analytics and visualization.",
+          icon: "📊",
+          keyFeatures: [
+            "Data Warehouse Design",
+            "Real-time Analytics Dashboards",
+            "Business Intelligence Solutions",
+            "Data Migration & Integration"
+          ],
+          technologies: ["Tableau", "Power BI", "Apache Spark", "SQL", "MongoDB"],
+          useCases: [
+            {
+              industry: "Finance",
+              description: "Risk analysis and investment insights"
+            },
+            {
+              industry: "Marketing",
+              description: "Customer segmentation and campaign performance analysis"
+            },
+            {
+              industry: "Operations",
+              description: "Supply chain optimization and logistics analysis"
+            }
+          ],
+          isActive: true,
+          order: 3
+        },
+        {
+          title: "Cloud Solutions",
+          slug: "cloud-solutions",
+          description: "Scalable and secure cloud infrastructure to support your growing business needs.",
+          icon: "☁️",
+          keyFeatures: [
+            "Cloud Migration & Strategy",
+            "DevOps & CI/CD Implementation",
+            "Serverless Architecture",
+            "Cloud Security & Compliance"
+          ],
+          technologies: ["AWS", "Azure", "Google Cloud", "Kubernetes", "Docker"],
+          useCases: [
+            {
+              industry: "Startups",
+              description: "Scalable infrastructure for rapid growth"
+            },
+            {
+              industry: "Enterprise",
+              description: "Hybrid cloud solutions and multi-cloud strategies"
+            },
+            {
+              industry: "Healthcare",
+              description: "HIPAA-compliant cloud infrastructure"
+            }
+          ],
+          isActive: true,
+          order: 4
+        },
+        {
+          title: "Digital Transformation",
+          slug: "digital-transformation",
+          description: "Comprehensive digital strategy and implementation to modernize your business operations.",
+          icon: "🔄",
+          keyFeatures: [
+            "Digital Strategy Consulting",
+            "Process Automation",
+            "System Integration",
+            "Change Management"
+          ],
+          technologies: ["Salesforce", "Microsoft 365", "Zapier", "ServiceNow", "SAP"],
+          useCases: [
+            {
+              industry: "Manufacturing",
+              description: "Industry 4.0 and smart factory implementation"
+            },
+            {
+              industry: "Education",
+              description: "Digital learning platforms and student management systems"
+            },
+            {
+              industry: "Government",
+              description: "Digital citizen services and e-governance"
+            }
+          ],
+          isActive: true,
+          order: 5
+        },
+        {
+          title: "Mobile Development",
+          slug: "mobile-development",
+          description: "Native and cross-platform mobile applications that engage and delight your users.",
+          icon: "📱",
+          keyFeatures: [
+            "iOS & Android Development",
+            "Cross-platform Solutions",
+            "Mobile App UI/UX Design",
+            "App Store Optimization"
+          ],
+          technologies: ["React Native", "Flutter", "Swift", "Kotlin", "Xamarin"],
+          useCases: [
+            {
+              industry: "Healthcare",
+              description: "Telemedicine and patient monitoring apps"
+            },
+            {
+              industry: "Retail",
+              description: "Mobile shopping and loyalty applications"
+            },
+            {
+              industry: "Fitness",
+              description: "Health tracking and workout applications"
+            }
+          ],
+          isActive: true,
+          order: 6
+        },
+        {
+          title: "Cybersecurity",
+          slug: "cybersecurity",
+          description: "Protect your digital assets with comprehensive security solutions and best practices.",
+          icon: "🔒",
+          keyFeatures: [
+            "Security Audits & Assessments",
+            "Penetration Testing",
+            "Compliance Management",
+            "Security Training"
+          ],
+          technologies: ["OWASP", "SOC 2", "ISO 27001", "GDPR", "HIPAA"],
+          useCases: [
+            {
+              industry: "Finance",
+              description: "Financial data protection and compliance"
+            },
+            {
+              industry: "Healthcare",
+              description: "Patient data security and HIPAA compliance"
+            },
+            {
+              industry: "E-commerce",
+              description: "Payment security and fraud prevention"
+            }
+          ],
+          isActive: true,
+          order: 7
+        },
+        {
+          title: "Consulting & Strategy",
+          slug: "consulting-strategy",
+          description: "Strategic technology consulting to align your IT investments with business objectives.",
+          icon: "📈",
+          keyFeatures: [
+            "Technology Roadmapping",
+            "Architecture Reviews",
+            "Vendor Selection",
+            "Project Management"
+          ],
+          technologies: ["Agile", "Scrum", "TOGAF", "ITIL", "PMI"],
+          useCases: [
+            {
+              industry: "Enterprise",
+              description: "IT strategy and digital transformation roadmap"
+            },
+            {
+              industry: "Startups",
+              description: "Technology stack selection and architecture planning"
+            },
+            {
+              industry: "Non-profit",
+              description: "Cost-effective technology solutions and implementation"
+            }
+          ],
+          isActive: true,
+          order: 8
+        }
+      ],
+      industries: [
+        {
+          name: "Healthcare",
+          description: "HIPAA-compliant solutions for medical practices and healthcare providers",
+          icon: "🏥",
+          isActive: true
+        },
+        {
+          name: "Finance",
+          description: "Secure financial applications and banking solutions",
+          icon: "💰",
+          isActive: true
+        },
+        {
+          name: "Retail",
+          description: "E-commerce platforms and retail management systems",
+          icon: "🛒",
+          isActive: true
+        },
+        {
+          name: "Education",
+          description: "Learning management systems and educational technology",
+          icon: "🎓",
+          isActive: true
+        },
+        {
+          name: "Manufacturing",
+          description: "Industry 4.0 and smart factory solutions",
+          icon: "🏭",
+          isActive: true
+        },
+        {
+          name: "Government",
+          description: "Digital governance and citizen service platforms",
+          icon: "🏛️",
+          isActive: true
+        }
+      ],
+      ctaSection: {
+        title: "Ready to Transform Your Business?",
+        description: "Let's discuss how our technology solutions can help you achieve your business goals. Our team of experts is ready to guide you through your digital transformation journey.",
+        buttons: [
+          {
+            text: "Schedule a Consultation",
+            link: "/contact",
+            variant: "primary"
+          },
+          {
+            text: "View Our Portfolio",
+            link: "/portfolio",
+            variant: "secondary"
+          }
+        ]
+      },
+      seoMetadata: {
+        title: "Services - CodeNexIn Technology Solutions",
+        description: "Discover our comprehensive technology services including custom software development, AI solutions, data analytics, cloud services, and digital transformation.",
+        keywords: ["services", "technology", "software development", "AI", "cloud", "consulting"]
+      }
+    });
+
+    await servicesContent.save();
+    console.log('Services page content created successfully');
+  } catch (error) {
+    console.error('Error seeding services data:', error);
+  }
+};
+
+// Main seed function
 const seedData = async () => {
   try {
     await mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/codenexin');
@@ -13,6 +493,8 @@ const seedData = async () => {
     await Home.deleteMany({});
     await Client.deleteMany({});
     await Testimonial.deleteMany({});
+    await About.deleteMany({});
+    await Service.deleteMany({});
 
     // Create default home content
     const homeContent = new Home({
@@ -346,6 +828,12 @@ const seedData = async () => {
 
     await Client.insertMany(clients);
     console.log('Sample clients created');
+
+    // Seed About page data
+    await seedAboutData();
+
+    // Seed Services page data
+    await seedServicesData();
 
     console.log('Database seeded successfully!');
     console.log('You can now start the server with: npm run dev');
