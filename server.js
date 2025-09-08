@@ -24,6 +24,8 @@ const blogRoutes = require('./routes/blogs');
 const clientRoutes = require('./routes/clients');
 const aboutRoutes = require('./routes/about');
 const serviceRoutes = require('./routes/services');
+const contactRoutes = require('./routes/contact');
+
 
 // Routes
 app.use('/api/home', homeRoutes);
@@ -32,17 +34,19 @@ app.use('/api/blogs', blogRoutes);
 app.use('/api/clients', clientRoutes);
 app.use('/api/about', aboutRoutes);
 app.use('/api/services', serviceRoutes);
+app.use('/api/contact', contactRoutes);
 
 // Basic route
 app.get('/', (req, res) => {
   res.json({ 
-    message: '🚀 CodeNexIn Backend is running!',
+    message: ' CodeNexIn Backend is running!',
     version: '1.0.0',
     status: 'OK',
     endpoints: {
       home: '/api/home',
       about: '/api/about',
       services: '/api/services',
+      contact: '/api/contact',
       testimonials: '/api/testimonials',
       blogs: '/api/blogs',
       clients: '/api/clients'
@@ -79,13 +83,13 @@ app.use('*', (req, res) => {
 
 // Start server
 app.listen(PORT, () => {
-  console.log('\n✨ ========================================');
-  console.log('🚀 CodeNexIn Backend Server Started');
-  console.log('✨ ========================================');
-  console.log(`📍 Local: http://localhost:${PORT}`);
-  console.log(`🏠 Home API: http://localhost:${PORT}/api/home`);
-  console.log(`📖 About API: http://localhost:${PORT}/api/about`);
-  console.log(`🛠️ Services API: http://localhost:${PORT}/api/services`);
-  console.log(`❤️ Health: http://localhost:${PORT}/health`);
-  console.log('✨ ========================================\n');
+  console.log('\n ========================================');
+  console.log('CodeNexIn Backend Server Started');
+  console.log(' ========================================');
+  console.log(` Local: http://localhost:${PORT}`);
+  console.log(` Home API: http://localhost:${PORT}/api/home`);
+  console.log(` About API: http://localhost:${PORT}/api/about`);
+  console.log(` Services API: http://localhost:${PORT}/api/services`);
+  console.log(` Health: http://localhost:${PORT}/health`);
+  console.log(' ========================================\n');
 });

@@ -186,7 +186,7 @@ const seedServicesData = async () => {
           title: "Custom Software Development",
           slug: "custom-software-development",
           description: "End-to-end software solutions tailored to your specific business needs and requirements.",
-          icon: "💻",
+          icon: "",
           keyFeatures: [
             "Web Application Development",
             "Enterprise Software Solutions",
@@ -483,6 +483,50 @@ const seedServicesData = async () => {
   }
 };
 
+// Seed Contact Page Data
+
+const seedContactData = async () => {
+  try {
+    await ContactInfo.deleteMany({});
+
+    const contactInfo = new ContactInfo({
+      companyName: "CodeNexIn",
+      email: "hello@codenexin.com",
+      phone: "+1 (555) 123-4567",
+      address: {
+        street: "123 Tech Street, Suite 456",
+        city: "San Francisco",
+        state: "CA",
+        zipCode: "94105",
+        country: "USA"
+      },
+      businessHours: {
+        mondayToFriday: "9:00 AM - 6:00 PM",
+        saturday: "10:00 AM - 4:00 PM",
+        sunday: "Closed",
+        timezone: "PST"
+      },
+      emergencySupport: {
+        available: true,
+        description: "For urgent technical support or critical issues, our emergency support team is available 24/7.",
+        contact: "+1 (555) EMERGENCY"
+      },
+      socialMedia: {
+        linkedin: "https://linkedin.com/company/codenexin",
+        twitter: "https://twitter.com/codenexin",
+        github: "https://github.com/codenexin",
+        facebook: "https://facebook.com/codenexin"
+      },
+      responseTime: "24 hours"
+    });
+
+    await contactInfo.save();
+    console.log('Contact information created successfully');
+  } catch (error) {
+    console.error('Error seeding contact data:', error);
+  }
+};
+
 // Main seed function
 const seedData = async () => {
   try {
@@ -495,6 +539,7 @@ const seedData = async () => {
     await Testimonial.deleteMany({});
     await About.deleteMany({});
     await Service.deleteMany({});
+    
 
     // Create default home content
     const homeContent = new Home({
@@ -834,6 +879,9 @@ const seedData = async () => {
 
     // Seed Services page data
     await seedServicesData();
+
+    // seed contact page data 
+    await seedContactData();
 
     console.log('Database seeded successfully!');
     console.log('You can now start the server with: npm run dev');
