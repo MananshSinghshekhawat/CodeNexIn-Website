@@ -23,6 +23,7 @@ app.use('/api/testimonials', require('./routes/testimonials'));
 app.use('/api/blogs', require('./routes/blogs'));
 app.use('/api/clients', require('./routes/clients'));
 app.use('/api/about', require('./routes/about'));
+app.use('/api/services', require('./routes/services'));
 // Basic route
 app.get('/', (req, res) => {
   res.json({ 
