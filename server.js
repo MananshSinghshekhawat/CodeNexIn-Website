@@ -25,6 +25,8 @@ const clientRoutes = require('./routes/clients');
 const aboutRoutes = require('./routes/about');
 const serviceRoutes = require('./routes/services');
 const contactRoutes = require('./routes/contact');
+const portfolioRoutes = require('./routes/portfolio'); 
+
 
 
 // Routes
@@ -35,6 +37,8 @@ app.use('/api/clients', clientRoutes);
 app.use('/api/about', aboutRoutes);
 app.use('/api/services', serviceRoutes);
 app.use('/api/contact', contactRoutes);
+app.use('/api/portfolio', portfolioRoutes); 
+
 
 // Basic route
 app.get('/', (req, res) => {
@@ -49,7 +53,8 @@ app.get('/', (req, res) => {
       contact: '/api/contact',
       testimonials: '/api/testimonials',
       blogs: '/api/blogs',
-      clients: '/api/clients'
+      clients: '/api/clients',
+      portfolio: '/api/portfolio'
     }
   });
 });
@@ -90,6 +95,7 @@ app.listen(PORT, () => {
   console.log(` Home API: http://localhost:${PORT}/api/home`);
   console.log(` About API: http://localhost:${PORT}/api/about`);
   console.log(` Services API: http://localhost:${PORT}/api/services`);
+  console.log(` Portfolio API: http://localhost:${PORT}/api/portfolio`); 
   console.log(` Health: http://localhost:${PORT}/health`);
   console.log(' ========================================\n');
 });

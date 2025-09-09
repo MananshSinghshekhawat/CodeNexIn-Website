@@ -4,6 +4,7 @@ const Client = require('../models/Client');
 const Testimonial = require('../models/Testimonial');
 const About = require('../models/About');
 const Service = require('../models/Service');
+const Portfolio = require('../models/Portfolio');
 require('dotenv').config();
 
 // Seed About Page Data
@@ -483,6 +484,199 @@ const seedServicesData = async () => {
   }
 };
 
+// seed portfolio page data
+
+const seedPortfolioData = async () => {
+  try {
+    await Portfolio.deleteMany({});
+
+    const portfolioItems = [
+      {
+        title: "RetailBot Customer Assistant",
+        description: "Intelligent chatbot that provides personalized shopping experiences and customer support.",
+        detailedDescription: "A comprehensive AI-powered customer service solution that handles inquiries, provides product recommendations, and processes orders seamlessly.",
+        category: "AI Solutions",
+        client: {
+          name: "MegaRetail Corp",
+          industry: "Retail",
+          logo: {
+            url: "/images/clients/megaretail.png",
+            alt: "MegaRetail Corp Logo"
+          }
+        },
+        year: 2023,
+        keyOutcomes: [
+          { title: "Reduction in support tickets", value: "70%" },
+          { title: "Increase in customer satisfaction", value: "45%" },
+          { title: "Boost in conversion rates", value: "35%" }
+        ],
+        technologies: [
+          { name: "OpenAI GPT", category: "AI/ML" },
+          { name: "Dialogflow", category: "NLP" },
+          { name: "React", category: "Frontend" },
+          { name: "Node.js", category: "Backend" }
+        ],
+        images: [
+          {
+            url: "/images/portfolio/retailbot-1.jpg",
+            alt: "RetailBot Dashboard",
+            caption: "Customer service dashboard",
+            isPrimary: true
+          }
+        ],
+        featured: true,
+        status: "completed",
+        projectDuration: {
+          startDate: new Date('2023-01-15'),
+          endDate: new Date('2023-06-20'),
+          duration: "5 months"
+        },
+        teamSize: 8,
+        projectUrl: "https://retailbot.demo.com",
+        caseStudyUrl: "/case-studies/retailbot",
+        order: 1
+      },
+      {
+        title: "DataViz Analytics Dashboard",
+        description: "Comprehensive business intelligence platform with predictive analytics and real-time insights.",
+        detailedDescription: "An advanced analytics platform that transforms raw data into actionable insights with interactive visualizations and predictive capabilities.",
+        category: "Data Analytics",
+        client: {
+          name: "Growth Analytics Inc",
+          industry: "Technology",
+          logo: {
+            url: "/images/clients/growth-analytics.png",
+            alt: "Growth Analytics Logo"
+          }
+        },
+        year: 2023,
+        keyOutcomes: [
+          { title: "Faster decision making", value: "300%" },
+          { title: "Improvement in forecast accuracy", value: "50%" },
+          { title: "Reduction in manual reporting", value: "90%" }
+        ],
+        technologies: [
+          { name: "Tableau", category: "Visualization" },
+          { name: "Python", category: "Backend" },
+          { name: "AWS", category: "Cloud" },
+          { name: "Machine Learning", category: "AI/ML" }
+        ],
+        images: [
+          {
+            url: "/images/portfolio/dataviz-1.jpg",
+            alt: "DataViz Dashboard",
+            caption: "Interactive analytics interface",
+            isPrimary: true
+          }
+        ],
+        featured: true,
+        status: "completed",
+        projectDuration: {
+          startDate: new Date('2023-02-10'),
+          endDate: new Date('2023-08-15'),
+          duration: "6 months"
+        },
+        teamSize: 12,
+        projectUrl: "https://dataviz.demo.com",
+        order: 2
+      },
+      {
+        title: "AgriTech Crop Optimization",
+        description: "AI-powered system for crop yield prediction and optimization using satellite imagery and IoT data.",
+        detailedDescription: "A precision agriculture solution that leverages satellite data, IoT sensors, and machine learning to optimize crop yields and resource usage.",
+        category: "AI Solutions",
+        client: {
+          name: "Smart Farms Collective",
+          industry: "Agriculture",
+          logo: {
+            url: "/images/clients/smart-farms.png",
+            alt: "Smart Farms Logo"
+          }
+        },
+        year: 2023,
+        keyOutcomes: [
+          { title: "Increase in crop yield", value: "25%" },
+          { title: "Reduction in water usage", value: "30%" },
+          { title: "Decrease in pesticide use", value: "40%" }
+        ],
+        technologies: [
+          { name: "Computer Vision", category: "AI/ML" },
+          { name: "IoT Integration", category: "IoT" },
+          { name: "Satellite APIs", category: "Data" },
+          { name: "ML Models", category: "AI/ML" }
+        ],
+        images: [
+          {
+            url: "/images/portfolio/agritech-1.jpg",
+            alt: "Crop Monitoring Interface",
+            caption: "Real-time crop health monitoring",
+            isPrimary: true
+          }
+        ],
+        featured: true,
+        status: "completed",
+        projectDuration: {
+          startDate: new Date('2023-03-01'),
+          endDate: new Date('2023-09-30'),
+          duration: "7 months"
+        },
+        teamSize: 10,
+        projectUrl: "https://agritech.demo.com",
+        order: 3
+      },
+      {
+        title: "MedAI Diagnostic Assistant",
+        description: "AI-powered diagnostic support system that assists healthcare professionals in early disease detection.",
+        detailedDescription: "A medical AI platform that analyzes medical images and patient data to assist doctors in early diagnosis and treatment planning.",
+        category: "Healthcare",
+        client: {
+          name: "Regional Medical Center",
+          industry: "Healthcare",
+          logo: {
+            url: "/images/clients/regional-medical.png",
+            alt: "Regional Medical Center Logo"
+          }
+        },
+        year: 2024,
+        keyOutcomes: [
+          { title: "Faster diagnosis time", value: "40%" },
+          { title: "Accuracy in early detection", value: "95%" },
+          { title: "Reduction in diagnostic errors", value: "60%" }
+        ],
+        technologies: [
+          { name: "TensorFlow", category: "AI/ML" },
+          { name: "Computer Vision", category: "AI/ML" },
+          { name: "Python", category: "Backend" },
+          { name: "Medical APIs", category: "Integration" }
+        ],
+        images: [
+          {
+            url: "/images/portfolio/medai-1.jpg",
+            alt: "MedAI Diagnostic Interface",
+            caption: "Medical image analysis dashboard",
+            isPrimary: true
+          }
+        ],
+        featured: true,
+        status: "completed",
+        projectDuration: {
+          startDate: new Date('2024-01-10'),
+          endDate: new Date('2024-07-15'),
+          duration: "6 months"
+        },
+        teamSize: 15,
+        projectUrl: "https://medai.demo.com",
+        order: 4
+      }
+    ];
+
+    await Portfolio.insertMany(portfolioItems);
+    console.log('Portfolio data seeded successfully');
+  } catch (error) {
+    console.error('Error seeding portfolio data:', error);
+  }
+};
+
 // Seed Contact Page Data
 
 const seedContactData = async () => {
@@ -539,6 +733,8 @@ const seedData = async () => {
     await Testimonial.deleteMany({});
     await About.deleteMany({});
     await Service.deleteMany({});
+    await contact.deleteMany({});
+    await Portfolio.deleteMany({});
     
 
     // Create default home content
@@ -882,6 +1078,9 @@ const seedData = async () => {
 
     // seed contact page data 
     await seedContactData();
+
+    // seed portfolio page data
+    await seedPortfolioData();
 
     console.log('Database seeded successfully!');
     console.log('You can now start the server with: npm run dev');
