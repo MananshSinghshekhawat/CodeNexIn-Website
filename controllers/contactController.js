@@ -51,7 +51,7 @@ exports.getContactInfo = async (req, res) => {
   }
 };
 
-// Submit contact form
+// Submit contact form - FIXED
 exports.submitContactForm = async (req, res) => {
   try {
     const {
@@ -66,11 +66,13 @@ exports.submitContactForm = async (req, res) => {
       urgency
     } = req.body;
 
+    console.log('Received contact form data:', req.body);
+
     // Basic validation
     if (!firstName || !lastName || !email || !projectType || !projectDescription) {
       return res.status(400).json({
         success: false,
-        message: 'Please fill in all required fields'
+        message: 'Please fill in all required fields: firstName, lastName, email, projectType, projectDescription'
       });
     }
 
@@ -79,20 +81,19 @@ exports.submitContactForm = async (req, res) => {
       firstName,
       lastName,
       email,
-      company,
-      phone,
+      company: company || '',
+      phone: phone || '',
       projectType,
-      projectBudget,
+      projectBudget: projectBudget || 'Not sure yet',
       projectDescription,
-      urgency,
-      ipAddress: req.ip,
-      userAgent: req.get('User-Agent')
+      urgency: urgency || 'Normal',
+      ipAddress: req.ip || 'Unknown',
+      userAgent: req.get('User-Agent') || 'Unknown'
     });
 
     await contactSubmission.save();
 
-    // Here you would typically send an email notification
-    // await sendContactEmail(contactSubmission);
+    console.log('Contact form submitted successfully:', contactSubmission._id);
 
     res.status(201).json({
       success: true,
@@ -104,6 +105,7 @@ exports.submitContactForm = async (req, res) => {
     });
 
   } catch (error) {
+    console.error('Error submitting contact form:', error);
     res.status(500).json({
       success: false,
       message: 'Error submitting contact form',
@@ -112,14 +114,14 @@ exports.submitContactForm = async (req, res) => {
   }
 };
 
-// Get all contact submissions (admin only)
+// Get all contact submissions (admin only) - FIXED
 exports.getContactSubmissions = async (req, res) => {
   try {
     const { page = 1, limit = 10, status } = req.query;
     const skip = (page - 1) * limit;
 
     let query = {};
-    if (status) {
+    if (status && status !== 'all') {
       query.status = status;
     }
 
@@ -142,6 +144,7 @@ exports.getContactSubmissions = async (req, res) => {
       }
     });
   } catch (error) {
+    console.error('Error fetching contact submissions:', error);
     res.status(500).json({
       success: false,
       message: 'Error fetching contact submissions',
@@ -150,10 +153,19 @@ exports.getContactSubmissions = async (req, res) => {
   }
 };
 
-// Get single contact submission (admin only)
+// Get single contact submission (admin only) - FIXED
 exports.getContactSubmission = async (req, res) => {
   try {
     const { id } = req.params;
+
+    console.log('Fetching contact submission with ID:', id);
+
+    if (!id) {
+      return res.status(400).json({
+        success: false,
+        message: 'Submission ID is required'
+      });
+    }
 
     const submission = await Contact.findById(id);
     
@@ -169,6 +181,7 @@ exports.getContactSubmission = async (req, res) => {
       data: submission
     });
   } catch (error) {
+    console.error('Error fetching contact submission:', error);
     res.status(500).json({
       success: false,
       message: 'Error fetching contact submission',
@@ -177,11 +190,20 @@ exports.getContactSubmission = async (req, res) => {
   }
 };
 
-// Update contact submission status (admin only)
+// Update contact submission status (admin only) - FIXED
 exports.updateContactStatus = async (req, res) => {
   try {
     const { id } = req.params;
     const { status, notes } = req.body;
+
+    console.log('Updating contact status for ID:', id, 'with data:', req.body);
+
+    if (!id) {
+      return res.status(400).json({
+        success: false,
+        message: 'Submission ID is required'
+      });
+    }
 
     const submission = await Contact.findById(id);
     
@@ -199,9 +221,11 @@ exports.updateContactStatus = async (req, res) => {
     if (notes) {
       submission.notes.push({
         content: notes,
-        addedBy: 'Admin'
+        addedBy: req.user?.name || 'Admin' // Assuming you have user authentication
       });
     }
+
+    submission.isRead = true;
 
     await submission.save();
 
@@ -211,6 +235,7 @@ exports.updateContactStatus = async (req, res) => {
       data: submission
     });
   } catch (error) {
+    console.error('Error updating contact submission:', error);
     res.status(500).json({
       success: false,
       message: 'Error updating contact submission',
@@ -219,7 +244,7 @@ exports.updateContactStatus = async (req, res) => {
   }
 };
 
-// Update contact information (admin only)
+// Update contact information (admin only) - FIXED
 exports.updateContactInfo = async (req, res) => {
   try {
     const updates = req.body;
@@ -230,7 +255,9 @@ exports.updateContactInfo = async (req, res) => {
       contactInfo = new ContactInfo(updates);
     } else {
       Object.keys(updates).forEach(key => {
-        contactInfo[key] = updates[key];
+        if (updates[key] !== undefined) {
+          contactInfo[key] = updates[key];
+        }
       });
     }
     
@@ -243,6 +270,7 @@ exports.updateContactInfo = async (req, res) => {
       data: contactInfo
     });
   } catch (error) {
+    console.error('Error updating contact information:', error);
     res.status(500).json({
       success: false,
       message: 'Error updating contact information',

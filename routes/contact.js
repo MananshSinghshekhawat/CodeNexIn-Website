@@ -13,10 +13,16 @@ const {
 router.get('/', getContactInfo);
 router.post('/submit', submitContactForm);
 
-// Admin routes
+// Admin routes - get all submissions
 router.get('/submissions', getContactSubmissions);
+
+// Admin routes - get single submission by ID
 router.get('/submissions/:id', getContactSubmission);
-router.put('/submissions/:id', updateContactStatus);
-router.put('/admin', updateContactInfo);
+
+// Admin routes - update submission status by ID
+router.put('/submissions/:id/status', updateContactStatus);
+
+// Admin routes - update contact information
+router.put('/admin/info', updateContactInfo);
 
 module.exports = router;
