@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const Portfolio = require('../models/Portfolio');
 
 // Get all portfolio items with filtering
@@ -147,9 +148,12 @@ const getFeaturedPortfolioItems = async (req, res) => {
 // Create new portfolio item (Admin only)
 const createPortfolioItem = async (req, res) => {
   try {
+    const { title, slug, ...rest } = req.body;
+    
     // Generate slug if not provided
-    if (!req.body.slug && req.body.title) {
-      req.body.slug = req.body.title
+    let finalSlug = slug;
+    if (!finalSlug && title) {
+      finalSlug = title
         .toLowerCase()
         .replace(/[^a-z0-9 -]/g, '')
         .replace(/\s+/g, '-')
@@ -157,7 +161,19 @@ const createPortfolioItem = async (req, res) => {
         .trim();
     }
     
-    const portfolioItem = new Portfolio(req.body);
+    if (!finalSlug) {
+      return res.status(400).json({
+        success: false,
+        message: 'Slug is required when title is not provided'
+      });
+    }
+    
+    const portfolioItem = new Portfolio({
+      title,
+      slug: finalSlug,
+      ...rest
+    });
+    
     await portfolioItem.save();
     
     res.status(201).json({
@@ -174,6 +190,15 @@ const createPortfolioItem = async (req, res) => {
       });
     }
     
+    if (error.name === 'ValidationError') {
+      const errors = Object.values(error.errors).map(err => err.message);
+      return res.status(400).json({
+        success: false,
+        message: 'Validation error',
+        errors
+      });
+    }
+    
     res.status(400).json({
       success: false,
       message: 'Error creating portfolio item',
@@ -187,19 +212,35 @@ const updatePortfolioItem = async (req, res) => {
   try {
     const { id } = req.params;
     
+    // Check if ID is valid
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid portfolio item ID'
+      });
+    }
+    
+    const { title, slug, ...updateData } = req.body;
+    
     // Generate slug if title is being updated
-    if (req.body.title && !req.body.slug) {
-      req.body.slug = req.body.title
+    if (title && !slug) {
+      updateData.slug = title
         .toLowerCase()
         .replace(/[^a-z0-9 -]/g, '')
         .replace(/\s+/g, '-')
         .replace(/-+/g, '-')
         .trim();
+    } else if (slug) {
+      updateData.slug = slug;
+    }
+    
+    if (title) {
+      updateData.title = title;
     }
     
     const portfolioItem = await Portfolio.findByIdAndUpdate(
       id,
-      req.body,
+      updateData,
       { new: true, runValidators: true }
     ).select('-__v');
     
@@ -221,6 +262,15 @@ const updatePortfolioItem = async (req, res) => {
         success: false,
         message: 'Portfolio item with this slug already exists',
         error: error.message
+      });
+    }
+    
+    if (error.name === 'ValidationError') {
+      const errors = Object.values(error.errors).map(err => err.message);
+      return res.status(400).json({
+        success: false,
+        message: 'Validation error',
+        errors
       });
     }
     

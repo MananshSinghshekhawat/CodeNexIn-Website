@@ -4,6 +4,7 @@ const Client = require('../models/Client');
 const Testimonial = require('../models/Testimonial');
 const About = require('../models/About');
 const Service = require('../models/Service');
+const ContactInfo = require('../models/ContactInfo');
 const Portfolio = require('../models/Portfolio');
 require('dotenv').config();
 
@@ -1099,4 +1100,4 @@ const seedData = async () => {
   }
 };
 
-seedData();
+module.exports = seedData;
