@@ -18,6 +18,7 @@ router.get('/industries', getPortfolioIndustries);
 router.get('/featured', getFeaturedPortfolioItems);
 router.get('/:slug', getPortfolioItemBySlug);
 
+
 router.post('/', createPortfolioItem);
 router.put('/:id', updatePortfolioItem);
 router.delete('/:id', deletePortfolioItem);

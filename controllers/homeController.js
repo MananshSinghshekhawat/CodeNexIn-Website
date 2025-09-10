@@ -2,7 +2,7 @@ const Home = require('../models/Home');
 const Testimonial = require('../models/Testimonial');
 const Blog = require('../models/Blog');
 const Client = require('../models/Client');
-const User = require('../models/User'); // ✅ Register User model so populate works
+const User = require('../models/User');
 
 // Get home page content
 exports.getHomeContent = async (req, res) => {

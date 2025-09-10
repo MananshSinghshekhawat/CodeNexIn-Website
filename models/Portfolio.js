@@ -116,7 +116,7 @@ const portfolioItemSchema = new mongoose.Schema({
 
 // Create slug from title
 portfolioItemSchema.pre('save', function(next) {
-  if (this.isModified('title')) {
+  if (this.isModified('title') && !this.slug) {
     this.slug = this.title
       .toLowerCase()
       .replace(/[^a-z0-9 -]/g, '')

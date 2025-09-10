@@ -493,6 +493,7 @@ const seedPortfolioData = async () => {
     const portfolioItems = [
       {
         title: "RetailBot Customer Assistant",
+        slug: "retailbot-customer-assistant",
         description: "Intelligent chatbot that provides personalized shopping experiences and customer support.",
         detailedDescription: "A comprehensive AI-powered customer service solution that handles inquiries, provides product recommendations, and processes orders seamlessly.",
         category: "AI Solutions",
@@ -534,10 +535,12 @@ const seedPortfolioData = async () => {
         teamSize: 8,
         projectUrl: "https://retailbot.demo.com",
         caseStudyUrl: "/case-studies/retailbot",
-        order: 1
+        order: 1,
+        isActive: true
       },
       {
         title: "DataViz Analytics Dashboard",
+        slug: "dataviz-analytics-dashboard",
         description: "Comprehensive business intelligence platform with predictive analytics and real-time insights.",
         detailedDescription: "An advanced analytics platform that transforms raw data into actionable insights with interactive visualizations and predictive capabilities.",
         category: "Data Analytics",
@@ -578,10 +581,12 @@ const seedPortfolioData = async () => {
         },
         teamSize: 12,
         projectUrl: "https://dataviz.demo.com",
-        order: 2
+        order: 2,
+        isActive: true
       },
       {
         title: "AgriTech Crop Optimization",
+        slug: "agritech-crop-optimization",
         description: "AI-powered system for crop yield prediction and optimization using satellite imagery and IoT data.",
         detailedDescription: "A precision agriculture solution that leverages satellite data, IoT sensors, and machine learning to optimize crop yields and resource usage.",
         category: "AI Solutions",
@@ -622,10 +627,12 @@ const seedPortfolioData = async () => {
         },
         teamSize: 10,
         projectUrl: "https://agritech.demo.com",
-        order: 3
+        order: 3,
+        isActive: true
       },
       {
         title: "MedAI Diagnostic Assistant",
+        slug: "medai-diagnostic-assistant",
         description: "AI-powered diagnostic support system that assists healthcare professionals in early disease detection.",
         detailedDescription: "A medical AI platform that analyzes medical images and patient data to assist doctors in early diagnosis and treatment planning.",
         category: "Healthcare",
@@ -666,7 +673,8 @@ const seedPortfolioData = async () => {
         },
         teamSize: 15,
         projectUrl: "https://medai.demo.com",
-        order: 4
+        order: 4,
+        isActive: true
       }
     ];
 

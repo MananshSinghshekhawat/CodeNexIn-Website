@@ -147,6 +147,16 @@ const getFeaturedPortfolioItems = async (req, res) => {
 // Create new portfolio item (Admin only)
 const createPortfolioItem = async (req, res) => {
   try {
+    // Generate slug if not provided
+    if (!req.body.slug && req.body.title) {
+      req.body.slug = req.body.title
+        .toLowerCase()
+        .replace(/[^a-z0-9 -]/g, '')
+        .replace(/\s+/g, '-')
+        .replace(/-+/g, '-')
+        .trim();
+    }
+    
     const portfolioItem = new Portfolio(req.body);
     await portfolioItem.save();
     
@@ -156,6 +166,14 @@ const createPortfolioItem = async (req, res) => {
       data: portfolioItem
     });
   } catch (error) {
+    if (error.code === 11000) {
+      return res.status(400).json({
+        success: false,
+        message: 'Portfolio item with this slug already exists',
+        error: error.message
+      });
+    }
+    
     res.status(400).json({
       success: false,
       message: 'Error creating portfolio item',
@@ -168,6 +186,16 @@ const createPortfolioItem = async (req, res) => {
 const updatePortfolioItem = async (req, res) => {
   try {
     const { id } = req.params;
+    
+    // Generate slug if title is being updated
+    if (req.body.title && !req.body.slug) {
+      req.body.slug = req.body.title
+        .toLowerCase()
+        .replace(/[^a-z0-9 -]/g, '')
+        .replace(/\s+/g, '-')
+        .replace(/-+/g, '-')
+        .trim();
+    }
     
     const portfolioItem = await Portfolio.findByIdAndUpdate(
       id,
@@ -188,6 +216,14 @@ const updatePortfolioItem = async (req, res) => {
       data: portfolioItem
     });
   } catch (error) {
+    if (error.code === 11000) {
+      return res.status(400).json({
+        success: false,
+        message: 'Portfolio item with this slug already exists',
+        error: error.message
+      });
+    }
+    
     res.status(400).json({
       success: false,
       message: 'Error updating portfolio item',
@@ -200,6 +236,14 @@ const updatePortfolioItem = async (req, res) => {
 const deletePortfolioItem = async (req, res) => {
   try {
     const { id } = req.params;
+    
+    // Check if ID is valid
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid portfolio item ID'
+      });
+    }
     
     const portfolioItem = await Portfolio.findByIdAndDelete(id);
     
