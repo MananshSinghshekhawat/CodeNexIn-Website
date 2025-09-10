@@ -53,8 +53,8 @@ app.get('/', (req, res) => {
       contact: '/api/contact',
       testimonials: '/api/testimonials',
       blogs: '/api/blogs',
-      clients: '/api/clients',
-      portfolio: '/api/portfolio'
+      portfolio: '/api/portfolio',
+      clients: '/api/clients'
     }
   });
 });
