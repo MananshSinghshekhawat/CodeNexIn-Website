@@ -4,6 +4,8 @@ const { getHomeContent, updateHomeContent } = require('../controllers/homeContro
 
 // Public routes
 router.get('/', getHomeContent);
+
+// Admin routes
 router.put('/admin', updateHomeContent);
 
 module.exports = router;

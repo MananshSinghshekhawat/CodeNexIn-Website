@@ -197,7 +197,7 @@ const homeSchema = new mongoose.Schema({
   timestamps: true
 });
 
-// Only one home document should exist
+// Simple method to get home content
 homeSchema.statics.getHomeContent = function() {
   return this.findOne().sort({ createdAt: -1 });
 };
