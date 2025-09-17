@@ -14,8 +14,8 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/codenexin
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
-.then(() => console.log(' MongoDB connected successfully'))
-.catch(err => console.log(' MongoDB connection error:', err));
+.then(() => console.log('✅ MongoDB connected successfully'))
+.catch(err => console.log('❌ MongoDB connection error:', err));
 
 // Import routes
 const homeRoutes = require('./routes/home');
@@ -26,8 +26,8 @@ const aboutRoutes = require('./routes/about');
 const serviceRoutes = require('./routes/services');
 const contactRoutes = require('./routes/contact');
 const portfolioRoutes = require('./routes/portfolio'); 
-
-
+const loginRoutes = require('./routes/login');              // ✅ added
+const registrationRoutes = require('./routes/registration'); // ✅ added
 
 // Routes
 app.use('/api/home', homeRoutes);
@@ -38,12 +38,13 @@ app.use('/api/about', aboutRoutes);
 app.use('/api/services', serviceRoutes);
 app.use('/api/contact', contactRoutes);
 app.use('/api/portfolio', portfolioRoutes); 
-
+app.use('/api/login', loginRoutes);           // ✅ added
+app.use('/api/register', registrationRoutes); // ✅ added
 
 // Basic route
 app.get('/', (req, res) => {
   res.json({ 
-    message: ' CodeNexIn Backend is running!',
+    message: '🚀 CodeNexIn Backend is running!',
     version: '1.0.0',
     status: 'OK',
     endpoints: {
@@ -54,7 +55,9 @@ app.get('/', (req, res) => {
       testimonials: '/api/testimonials',
       blogs: '/api/blogs',
       portfolio: '/api/portfolio',
-      clients: '/api/clients'
+      clients: '/api/clients',
+      login: '/api/login',              // ✅ added
+      register: '/api/register'         // ✅ added
     }
   });
 });
@@ -62,7 +65,7 @@ app.get('/', (req, res) => {
 // Health check route
 app.get('/health', (req, res) => {
   res.json({ 
-    status: 'Server is healthy ',
+    status: 'Server is healthy ✅',
     timestamp: new Date().toISOString(),
     uptime: process.uptime()
   });
@@ -88,14 +91,16 @@ app.use('*', (req, res) => {
 
 // Start server
 app.listen(PORT, () => {
-  console.log('\n ========================================');
-  console.log('CodeNexIn Backend Server Started');
+  console.log('\n✨ ========================================');
+  console.log(' CodeNexIn Backend Server Started');
   console.log(' ========================================');
   console.log(` Local: http://localhost:${PORT}`);
   console.log(` Home API: http://localhost:${PORT}/api/home`);
   console.log(` About API: http://localhost:${PORT}/api/about`);
   console.log(` Services API: http://localhost:${PORT}/api/services`);
   console.log(` Portfolio API: http://localhost:${PORT}/api/portfolio`); 
+  console.log(` Login API: http://localhost:${PORT}/api/login`);
+  console.log(` Register API: http://localhost:${PORT}/api/register`);
   console.log(` Health: http://localhost:${PORT}/health`);
   console.log(' ========================================\n');
 });
