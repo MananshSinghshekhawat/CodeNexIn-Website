@@ -244,6 +244,43 @@ exports.updateContactStatus = async (req, res) => {
   }
 };
 
+// Update contact submission (admin only)
+exports.updateContactSubmission = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const updates = req.body;
+
+    if (!id) {
+      return res.status(400).json({
+        success: false,
+        message: 'Submission ID is required'
+      });
+    }
+
+    const submission = await Contact.findByIdAndUpdate(id, updates, { new: true });
+
+    if (!submission) {
+      return res.status(404).json({
+        success: false,
+        message: 'Contact submission not found'
+      });
+    }
+
+    res.json({
+      success: true,
+      message: 'Contact submission updated successfully',
+      data: submission
+    });
+  } catch (error) {
+    console.error('Error updating contact submission:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Error updating contact submission',
+      error: error.message
+    });
+  }
+};
+
 // Update contact information (admin only) - FIXED
 exports.updateContactInfo = async (req, res) => {
   try {

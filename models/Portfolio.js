@@ -124,6 +124,9 @@ portfolioItemSchema.pre('save', function(next) {
       .replace(/-+/g, '-')
       .trim();
   }
+  if (this.slug) {
+    this.slug = this.slug.toLowerCase();
+  }
   next();
 });
 

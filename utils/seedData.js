@@ -742,7 +742,7 @@ const seedData = async () => {
     await Testimonial.deleteMany({});
     await About.deleteMany({});
     await Service.deleteMany({});
-    await contact.deleteMany({});
+    await ContactInfo.deleteMany({});
     await Portfolio.deleteMany({});
     
 

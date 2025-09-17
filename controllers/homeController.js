@@ -187,7 +187,13 @@ exports.getHomeContent = async (req, res) => {
         clients: clients,
         contactInfo: homeContent?.contactInfo || defaultContent.contactInfo,
         newsletter: homeContent?.newsletter || defaultContent.newsletter,
-        stats: homeContent?.stats || [{ value: "200+", label: "Companies that trust us", isActive: true }]
+        stats: homeContent?.stats || [{ value: "200+", label: "Companies that trust us", isActive: true }],
+        clientLogos: homeContent?.clientLogos || [],
+        seoMetadata: homeContent?.seoMetadata || {
+          title: "CodeNexIn - AI Solutions & Digital Innovation",
+          description: "CodeNexIn provides cutting-edge AI solutions, custom software development, and digital transformation services for businesses worldwide.",
+          keywords: []
+        }
       }
     };
 

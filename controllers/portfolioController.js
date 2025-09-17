@@ -148,8 +148,16 @@ const getFeaturedPortfolioItems = async (req, res) => {
 // Create new portfolio item (Admin only)
 const createPortfolioItem = async (req, res) => {
   try {
-    const { title, slug, ...rest } = req.body;
-    
+    const { title, slug, category, client, year, ...rest } = req.body;
+
+    // Required fields check
+    if (!title || !category || !client || !client.name || !client.industry || !year) {
+      return res.status(400).json({
+        success: false,
+        message: 'Missing required fields: title, category, client (name & industry), year'
+      });
+    }
+
     // Generate slug if not provided
     let finalSlug = slug;
     if (!finalSlug && title) {
@@ -160,36 +168,40 @@ const createPortfolioItem = async (req, res) => {
         .replace(/-+/g, '-')
         .trim();
     }
-    
+
     if (!finalSlug) {
       return res.status(400).json({
         success: false,
         message: 'Slug is required when title is not provided'
       });
     }
-    
+
+    // Check for duplicate slug
+    const existing = await Portfolio.findOne({ slug: finalSlug });
+    if (existing) {
+      return res.status(400).json({
+        success: false,
+        message: 'Portfolio item with this slug already exists'
+      });
+    }
+
     const portfolioItem = new Portfolio({
       title,
       slug: finalSlug,
+      category,
+      client,
+      year,
       ...rest
     });
-    
+
     await portfolioItem.save();
-    
+
     res.status(201).json({
       success: true,
       message: 'Portfolio item created successfully',
       data: portfolioItem
     });
   } catch (error) {
-    if (error.code === 11000) {
-      return res.status(400).json({
-        success: false,
-        message: 'Portfolio item with this slug already exists',
-        error: error.message
-      });
-    }
-    
     if (error.name === 'ValidationError') {
       const errors = Object.values(error.errors).map(err => err.message);
       return res.status(400).json({
@@ -198,7 +210,6 @@ const createPortfolioItem = async (req, res) => {
         errors
       });
     }
-    
     res.status(400).json({
       success: false,
       message: 'Error creating portfolio item',
@@ -211,18 +222,17 @@ const createPortfolioItem = async (req, res) => {
 const updatePortfolioItem = async (req, res) => {
   try {
     const { id } = req.params;
-    
-    // Check if ID is valid
+
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return res.status(400).json({
         success: false,
         message: 'Invalid portfolio item ID'
       });
     }
-    
+
     const { title, slug, ...updateData } = req.body;
-    
-    // Generate slug if title is being updated
+
+    // Generate slug if title is being updated and slug not provided
     if (title && !slug) {
       updateData.slug = title
         .toLowerCase()
@@ -233,38 +243,41 @@ const updatePortfolioItem = async (req, res) => {
     } else if (slug) {
       updateData.slug = slug;
     }
-    
+
     if (title) {
       updateData.title = title;
     }
-    
+
+    // Prevent duplicate slug
+    if (updateData.slug) {
+      const existing = await Portfolio.findOne({ slug: updateData.slug, _id: { $ne: id } });
+      if (existing) {
+        return res.status(400).json({
+          success: false,
+          message: 'Portfolio item with this slug already exists'
+        });
+      }
+    }
+
     const portfolioItem = await Portfolio.findByIdAndUpdate(
       id,
       updateData,
       { new: true, runValidators: true }
     ).select('-__v');
-    
+
     if (!portfolioItem) {
       return res.status(404).json({
         success: false,
         message: 'Portfolio item not found'
       });
     }
-    
+
     res.json({
       success: true,
       message: 'Portfolio item updated successfully',
       data: portfolioItem
     });
   } catch (error) {
-    if (error.code === 11000) {
-      return res.status(400).json({
-        success: false,
-        message: 'Portfolio item with this slug already exists',
-        error: error.message
-      });
-    }
-    
     if (error.name === 'ValidationError') {
       const errors = Object.values(error.errors).map(err => err.message);
       return res.status(400).json({
@@ -273,7 +286,6 @@ const updatePortfolioItem = async (req, res) => {
         errors
       });
     }
-    
     res.status(400).json({
       success: false,
       message: 'Error updating portfolio item',
@@ -286,24 +298,23 @@ const updatePortfolioItem = async (req, res) => {
 const deletePortfolioItem = async (req, res) => {
   try {
     const { id } = req.params;
-    
-    // Check if ID is valid
+
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return res.status(400).json({
         success: false,
         message: 'Invalid portfolio item ID'
       });
     }
-    
+
     const portfolioItem = await Portfolio.findByIdAndDelete(id);
-    
+
     if (!portfolioItem) {
       return res.status(404).json({
         success: false,
         message: 'Portfolio item not found'
       });
     }
-    
+
     res.json({
       success: true,
       message: 'Portfolio item deleted successfully'

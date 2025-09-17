@@ -409,6 +409,12 @@ exports.getServiceBySlug = async (req, res) => {
       });
     }
 
+    // Debug: log all available slugs
+    const servicesContent = await Service.getServicesContent();
+    if (servicesContent && servicesContent.services) {
+      console.log('Available slugs:', servicesContent.services.map(s => s.slug));
+    }
+
     const service = await Service.findServiceBySlug(slug);
 
     if (!service) {

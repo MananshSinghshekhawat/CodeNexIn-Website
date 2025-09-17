@@ -6,7 +6,8 @@ const {
   getContactSubmissions,
   getContactSubmission,
   updateContactStatus,
-  updateContactInfo
+  updateContactInfo,
+  updateContactSubmission
 } = require('../controllers/contactController');
 
 // Public routes
@@ -24,5 +25,8 @@ router.put('/submissions/:id/status', updateContactStatus);
 
 // Admin routes - update contact information
 router.put('/admin/info', updateContactInfo);
+module.exports = router;
+// Admin routes - update submission by ID (general update)
+router.put('/submissions/:id', updateContactSubmission);
 
 module.exports = router;
