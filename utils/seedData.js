@@ -6,6 +6,8 @@ const About = require('../models/About');
 const Service = require('../models/Service');
 const ContactInfo = require('../models/ContactInfo');
 const Portfolio = require('../models/Portfolio');
+const Dashboard = require('../models/Dashboard');
+const User = require('../models/User');
 require('dotenv').config();
 
 // Seed About Page Data
@@ -485,8 +487,7 @@ const seedServicesData = async () => {
   }
 };
 
-// seed portfolio page data
-
+// Seed Portfolio Data
 const seedPortfolioData = async () => {
   try {
     await Portfolio.deleteMany({});
@@ -500,11 +501,7 @@ const seedPortfolioData = async () => {
         category: "AI Solutions",
         client: {
           name: "MegaRetail Corp",
-          industry: "Retail",
-          logo: {
-            url: "/images/clients/megaretail.png",
-            alt: "MegaRetail Corp Logo"
-          }
+          industry: "Retail"
         },
         year: 2023,
         keyOutcomes: [
@@ -517,14 +514,6 @@ const seedPortfolioData = async () => {
           { name: "Dialogflow", category: "NLP" },
           { name: "React", category: "Frontend" },
           { name: "Node.js", category: "Backend" }
-        ],
-        images: [
-          {
-            url: "/images/portfolio/retailbot-1.jpg",
-            alt: "RetailBot Dashboard",
-            caption: "Customer service dashboard",
-            isPrimary: true
-          }
         ],
         featured: true,
         status: "completed",
@@ -547,11 +536,7 @@ const seedPortfolioData = async () => {
         category: "Data Analytics",
         client: {
           name: "Growth Analytics Inc",
-          industry: "Technology",
-          logo: {
-            url: "/images/clients/growth-analytics.png",
-            alt: "Growth Analytics Logo"
-          }
+          industry: "Technology"
         },
         year: 2023,
         keyOutcomes: [
@@ -564,14 +549,6 @@ const seedPortfolioData = async () => {
           { name: "Python", category: "Backend" },
           { name: "AWS", category: "Cloud" },
           { name: "Machine Learning", category: "AI/ML" }
-        ],
-        images: [
-          {
-            url: "/images/portfolio/dataviz-1.jpg",
-            alt: "DataViz Dashboard",
-            caption: "Interactive analytics interface",
-            isPrimary: true
-          }
         ],
         featured: true,
         status: "completed",
@@ -593,11 +570,7 @@ const seedPortfolioData = async () => {
         category: "AI Solutions",
         client: {
           name: "Smart Farms Collective",
-          industry: "Agriculture",
-          logo: {
-            url: "/images/clients/smart-farms.png",
-            alt: "Smart Farms Logo"
-          }
+          industry: "Agriculture"
         },
         year: 2023,
         keyOutcomes: [
@@ -610,14 +583,6 @@ const seedPortfolioData = async () => {
           { name: "IoT Integration", category: "IoT" },
           { name: "Satellite APIs", category: "Data" },
           { name: "ML Models", category: "AI/ML" }
-        ],
-        images: [
-          {
-            url: "/images/portfolio/agritech-1.jpg",
-            alt: "Crop Monitoring Interface",
-            caption: "Real-time crop health monitoring",
-            isPrimary: true
-          }
         ],
         featured: true,
         status: "completed",
@@ -639,11 +604,7 @@ const seedPortfolioData = async () => {
         category: "Healthcare",
         client: {
           name: "Regional Medical Center",
-          industry: "Healthcare",
-          logo: {
-            url: "/images/clients/regional-medical.png",
-            alt: "Regional Medical Center Logo"
-          }
+          industry: "Healthcare"
         },
         year: 2024,
         keyOutcomes: [
@@ -656,14 +617,6 @@ const seedPortfolioData = async () => {
           { name: "Computer Vision", category: "AI/ML" },
           { name: "Python", category: "Backend" },
           { name: "Medical APIs", category: "Integration" }
-        ],
-        images: [
-          {
-            url: "/images/portfolio/medai-1.jpg",
-            alt: "MedAI Diagnostic Interface",
-            caption: "Medical image analysis dashboard",
-            isPrimary: true
-          }
         ],
         featured: true,
         status: "completed",
@@ -687,7 +640,6 @@ const seedPortfolioData = async () => {
 };
 
 // Seed Contact Page Data
-
 const seedContactData = async () => {
   try {
     await ContactInfo.deleteMany({});
@@ -730,6 +682,132 @@ const seedContactData = async () => {
   }
 };
 
+// Seed Dashboard Data
+const seedDashboardData = async () => {
+  try {
+    await Dashboard.deleteMany({});
+
+    // Create a test user for dashboard
+    let testUser = await User.findOne({ email: 'customer@example.com' });
+    if (!testUser) {
+      testUser = new User({
+        name: 'Demo Customer',
+        email: 'customer@example.com',
+        password: 'password123',
+        role: 'customer'
+      });
+      await testUser.save();
+    }
+
+    const dashboardData = new Dashboard({
+      userId: testUser._id,
+      totalProjects: {
+        count: 127,
+        growth: 12
+      },
+      revenue: {
+        current: 67000,
+        growth: 22,
+        history: [
+          { month: 'Jan', year: 2025, amount: 45000, growth: 15 },
+          { month: 'Feb', year: 2025, amount: 52000, growth: 18 },
+          { month: 'Mar', year: 2025, amount: 58000, growth: 20 },
+          { month: 'Apr', year: 2025, amount: 62000, growth: 21 },
+          { month: 'May', year: 2025, amount: 65000, growth: 22 },
+          { month: 'Jun', year: 2025, amount: 67000, growth: 22 }
+        ]
+      },
+      activeClients: {
+        count: 43,
+        growth: 8
+      },
+      satisfaction: {
+        rate: 98,
+        growth: 2
+      },
+      serviceDistribution: {
+        softwareDevelopment: 35,
+        aiMl: 25,
+        cloudSolutions: 20,
+        consulting: 20
+      },
+      projects: [
+        {
+          title: "E-commerce Platform Redesign",
+          client: "TechCorp Inc.",
+          progress: 75,
+          deadline: new Date('2025-05-17'),
+          status: "in-progress",
+          priority: "high"
+        },
+        {
+          title: "AI Chatbot Implementation",
+          client: "RetailMax",
+          progress: 60,
+          deadline: new Date('2025-01-30'),
+          status: "in-progress",
+          priority: "medium"
+        },
+        {
+          title: "Data Migration Project",
+          client: "FinanceFlow",
+          progress: 90,
+          deadline: new Date('2025-01-10'),
+          status: "in-progress",
+          priority: "high"
+        },
+        {
+          title: "Mobile App Development",
+          client: "StartupHub",
+          progress: 45,
+          deadline: new Date('2025-03-20'),
+          status: "in-progress",
+          priority: "medium"
+        }
+      ],
+      clients: [
+        {
+          name: "TechCorp Inc.",
+          industry: "Technology",
+          joinDate: new Date('2023-01-15'),
+          projectsCount: 5,
+          satisfaction: 95,
+          status: "active"
+        },
+        {
+          name: "RetailMax",
+          industry: "Retail",
+          joinDate: new Date('2023-03-20'),
+          projectsCount: 3,
+          satisfaction: 92,
+          status: "active"
+        },
+        {
+          name: "FinanceFlow",
+          industry: "Finance",
+          joinDate: new Date('2023-06-10'),
+          projectsCount: 2,
+          satisfaction: 98,
+          status: "active"
+        },
+        {
+          name: "StartupHub",
+          industry: "Technology",
+          joinDate: new Date('2023-09-05'),
+          projectsCount: 1,
+          satisfaction: 96,
+          status: "active"
+        }
+      ]
+    });
+
+    await dashboardData.save();
+    console.log('Dashboard data seeded successfully');
+  } catch (error) {
+    console.error('Error seeding dashboard data:', error);
+  }
+};
+
 // Main seed function
 const seedData = async () => {
   try {
@@ -744,7 +822,7 @@ const seedData = async () => {
     await Service.deleteMany({});
     await ContactInfo.deleteMany({});
     await Portfolio.deleteMany({});
-    
+    await Dashboard.deleteMany({});
 
     // Create default home content
     const homeContent = new Home({
@@ -1085,11 +1163,14 @@ const seedData = async () => {
     // Seed Services page data
     await seedServicesData();
 
-    // seed contact page data 
+    // Seed contact page data 
     await seedContactData();
 
-    // seed portfolio page data
+    // Seed portfolio page data
     await seedPortfolioData();
+
+    // Seed dashboard data
+    await seedDashboardData();
 
     console.log('Database seeded successfully!');
     console.log('You can now start the server with: npm run dev');
@@ -1099,5 +1180,10 @@ const seedData = async () => {
     process.exit(1);
   }
 };
+
+// Run seed if called directly
+if (require.main === module) {
+  seedData();
+}
 
 module.exports = seedData;

@@ -16,8 +16,8 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/codenexin
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
-.then(() => console.log('✅ MongoDB connected successfully'))
-.catch(err => console.log('❌ MongoDB connection error:', err));
+.then(() => console.log(' MongoDB connected successfully'))
+.catch(err => console.log(' MongoDB connection error:', err));
 
 // Import routes
 const homeRoutes = require('./routes/home');
@@ -27,13 +27,9 @@ const clientRoutes = require('./routes/clients');
 const aboutRoutes = require('./routes/about');
 const serviceRoutes = require('./routes/services');
 const contactRoutes = require('./routes/contact');
-<<<<<<< HEAD
 const portfolioRoutes = require('./routes/portfolio');
-const dashboardRoutes = require('./routes/dashboard'); // Add this line
-const authRoutes = require('./routes/auth'); // Add if you have auth routes
-=======
-const portfolioRoutes = require('./routes/portfolio'); 
->>>>>>> 9c68837354d7d790ee5512064e51bcda82a315d6
+const dashboardRoutes = require('./routes/dashboard'); // Only if this file exists
+const authRoutes = require('./routes/auth'); // Only if this file exists
 
 // Routes
 app.use('/api/home', homeRoutes);
@@ -43,13 +39,9 @@ app.use('/api/clients', clientRoutes);
 app.use('/api/about', aboutRoutes);
 app.use('/api/services', serviceRoutes);
 app.use('/api/contact', contactRoutes);
-<<<<<<< HEAD
 app.use('/api/portfolio', portfolioRoutes);
-app.use('/api/dashboard', dashboardRoutes); // Add this line
-app.use('/api/auth', authRoutes); // Add if you have auth routes
-=======
-app.use('/api/portfolio', portfolioRoutes); 
->>>>>>> 9c68837354d7d790ee5512064e51bcda82a315d6
+app.use('/api/dashboard', dashboardRoutes); // Only if this file exists
+app.use('/api/auth', authRoutes); // Only if this file exists
 
 // Basic route
 app.get('/', (req, res) => {
@@ -66,7 +58,7 @@ app.get('/', (req, res) => {
       blogs: '/api/blogs',
       clients: '/api/clients',
       portfolio: '/api/portfolio',
-      dashboard: '/api/dashboard' // Add this line
+      dashboard: '/api/dashboard'
     }
   });
 });
@@ -104,6 +96,14 @@ app.listen(PORT, () => {
   console.log(' CodeNexIn Backend Server Started');
   console.log(' ========================================');
   console.log(` Local: http://localhost:${PORT}`);
+  console.log(` Home API: http://localhost:${PORT}/api/home`);
+  console.log(` About API: http://localhost:${PORT}/api/about`);
+  console.log(` Services API: http://localhost:${PORT}/api/services`);
+  console.log(` Portfolio API: http://localhost:${PORT}/api/portfolio`);
+  console.log(` Dashboard API: http://localhost:${PORT}/api/dashboard`);
+  console.log(` Health: http://localhost:${PORT}/health`);
+  console.log(' ========================================\n');
+});
   console.log(` Home API: http://localhost:${PORT}/api/home`);
   console.log(` About API: http://localhost:${PORT}/api/about`);
   console.log(` Services API: http://localhost:${PORT}/api/services`);
