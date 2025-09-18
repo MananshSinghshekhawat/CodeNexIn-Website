@@ -1,11 +1,13 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors');
 require('dotenv').config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Basic middleware
+// Middleware
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -25,9 +27,9 @@ const clientRoutes = require('./routes/clients');
 const aboutRoutes = require('./routes/about');
 const serviceRoutes = require('./routes/services');
 const contactRoutes = require('./routes/contact');
-const portfolioRoutes = require('./routes/portfolio'); 
-
-
+const portfolioRoutes = require('./routes/portfolio');
+const dashboardRoutes = require('./routes/dashboard'); // Add this line
+const authRoutes = require('./routes/auth'); // Add if you have auth routes
 
 // Routes
 app.use('/api/home', homeRoutes);
@@ -37,8 +39,9 @@ app.use('/api/clients', clientRoutes);
 app.use('/api/about', aboutRoutes);
 app.use('/api/services', serviceRoutes);
 app.use('/api/contact', contactRoutes);
-app.use('/api/portfolio', portfolioRoutes); 
-
+app.use('/api/portfolio', portfolioRoutes);
+app.use('/api/dashboard', dashboardRoutes); // Add this line
+app.use('/api/auth', authRoutes); // Add if you have auth routes
 
 // Basic route
 app.get('/', (req, res) => {
@@ -53,8 +56,9 @@ app.get('/', (req, res) => {
       contact: '/api/contact',
       testimonials: '/api/testimonials',
       blogs: '/api/blogs',
+      clients: '/api/clients',
       portfolio: '/api/portfolio',
-      clients: '/api/clients'
+      dashboard: '/api/dashboard' // Add this line
     }
   });
 });
@@ -71,7 +75,7 @@ app.get('/health', (req, res) => {
 // Error handling middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);
-  res.status(500).json({  
+  res.status(500).json({
     success: false,
     message: 'Something went wrong!',
     error: process.env.NODE_ENV === 'development' ? err.message : 'Internal server error'
@@ -95,7 +99,8 @@ app.listen(PORT, () => {
   console.log(` Home API: http://localhost:${PORT}/api/home`);
   console.log(` About API: http://localhost:${PORT}/api/about`);
   console.log(` Services API: http://localhost:${PORT}/api/services`);
-  console.log(` Portfolio API: http://localhost:${PORT}/api/portfolio`); 
+  console.log(` Portfolio API: http://localhost:${PORT}/api/portfolio`);
+  console.log(` Dashboard API: http://localhost:${PORT}/api/dashboard`); // Add this line
   console.log(` Health: http://localhost:${PORT}/health`);
   console.log(' ========================================\n');
 });
