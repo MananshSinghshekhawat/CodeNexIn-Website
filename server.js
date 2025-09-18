@@ -14,8 +14,8 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/codenexin
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
-.then(() => console.log(' MongoDB connected successfully'))
-.catch(err => console.log(' MongoDB connection error:', err));
+.then(() => console.log('✅ MongoDB connected successfully'))
+.catch(err => console.log('❌ MongoDB connection error:', err));
 
 // Import routes
 const homeRoutes = require('./routes/home');
@@ -27,8 +27,6 @@ const serviceRoutes = require('./routes/services');
 const contactRoutes = require('./routes/contact');
 const portfolioRoutes = require('./routes/portfolio'); 
 
-
-
 // Routes
 app.use('/api/home', homeRoutes);
 app.use('/api/testimonials', testimonialRoutes);
@@ -39,11 +37,10 @@ app.use('/api/services', serviceRoutes);
 app.use('/api/contact', contactRoutes);
 app.use('/api/portfolio', portfolioRoutes); 
 
-
 // Basic route
 app.get('/', (req, res) => {
   res.json({ 
-    message: ' CodeNexIn Backend is running!',
+    message: '🚀 CodeNexIn Backend is running!',
     version: '1.0.0',
     status: 'OK',
     endpoints: {
@@ -62,7 +59,7 @@ app.get('/', (req, res) => {
 // Health check route
 app.get('/health', (req, res) => {
   res.json({ 
-    status: 'Server is healthy ',
+    status: 'Server is healthy ✅',
     timestamp: new Date().toISOString(),
     uptime: process.uptime()
   });
@@ -71,7 +68,7 @@ app.get('/health', (req, res) => {
 // Error handling middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);
-  res.status(500).json({  
+  res.status(500).json({
     success: false,
     message: 'Something went wrong!',
     error: process.env.NODE_ENV === 'development' ? err.message : 'Internal server error'
@@ -88,8 +85,8 @@ app.use('*', (req, res) => {
 
 // Start server
 app.listen(PORT, () => {
-  console.log('\n ========================================');
-  console.log('CodeNexIn Backend Server Started');
+  console.log('\n✨ ========================================');
+  console.log(' CodeNexIn Backend Server Started');
   console.log(' ========================================');
   console.log(` Local: http://localhost:${PORT}`);
   console.log(` Home API: http://localhost:${PORT}/api/home`);
