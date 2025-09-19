@@ -28,8 +28,8 @@ const aboutRoutes = require('./routes/about');
 const serviceRoutes = require('./routes/services');
 const contactRoutes = require('./routes/contact');
 const portfolioRoutes = require('./routes/portfolio');
-const dashboardRoutes = require('./routes/dashboard'); // Only if this file exists
-const authRoutes = require('./routes/auth'); // Only if this file exists
+const dashboardRoutes = require('./routes/dashboard'); 
+const authRoutes = require('./routes/auth'); 
 
 // Routes
 app.use('/api/home', homeRoutes);
@@ -40,13 +40,13 @@ app.use('/api/about', aboutRoutes);
 app.use('/api/services', serviceRoutes);
 app.use('/api/contact', contactRoutes);
 app.use('/api/portfolio', portfolioRoutes);
-app.use('/api/dashboard', dashboardRoutes); // Only if this file exists
-app.use('/api/auth', authRoutes); // Only if this file exists
+app.use('/api/dashboard', dashboardRoutes); 
+app.use('/api/auth', authRoutes); 
 
 // Basic route
 app.get('/', (req, res) => {
   res.json({ 
-    message: '🚀 CodeNexIn Backend is running!',
+    message: ' CodeNexIn Backend is running!',
     version: '1.0.0',
     status: 'OK',
     endpoints: {
@@ -58,7 +58,8 @@ app.get('/', (req, res) => {
       blogs: '/api/blogs',
       clients: '/api/clients',
       portfolio: '/api/portfolio',
-      dashboard: '/api/dashboard'
+      dashboard: '/api/dashboard',
+       auth: '/api/auth'
     }
   });
 });
@@ -66,7 +67,7 @@ app.get('/', (req, res) => {
 // Health check route
 app.get('/health', (req, res) => {
   res.json({ 
-    status: 'Server is healthy ✅',
+    status: 'Server is healthy ',
     timestamp: new Date().toISOString(),
     uptime: process.uptime()
   });
@@ -92,7 +93,7 @@ app.use('*', (req, res) => {
 
 // Start server
 app.listen(PORT, () => {
-  console.log('\n✨ ========================================');
+  console.log('\n ========================================');
   console.log(' CodeNexIn Backend Server Started');
   console.log(' ========================================');
   console.log(` Local: http://localhost:${PORT}`);
@@ -101,14 +102,7 @@ app.listen(PORT, () => {
   console.log(` Services API: http://localhost:${PORT}/api/services`);
   console.log(` Portfolio API: http://localhost:${PORT}/api/portfolio`);
   console.log(` Dashboard API: http://localhost:${PORT}/api/dashboard`);
-  console.log(` Health: http://localhost:${PORT}/health`);
-  console.log(' ========================================\n');
-});
-  console.log(` Home API: http://localhost:${PORT}/api/home`);
-  console.log(` About API: http://localhost:${PORT}/api/about`);
-  console.log(` Services API: http://localhost:${PORT}/api/services`);
-  console.log(` Portfolio API: http://localhost:${PORT}/api/portfolio`);
-  console.log(` Dashboard API: http://localhost:${PORT}/api/dashboard`); // Add this line
+  console.log(`Auth API: http://localhost:${PORT}/api/auth`);
   console.log(` Health: http://localhost:${PORT}/health`);
   console.log(' ========================================\n');
 });
