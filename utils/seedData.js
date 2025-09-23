@@ -691,10 +691,14 @@ const seedDashboardData = async () => {
     let testUser = await User.findOne({ email: 'customer@example.com' });
     if (!testUser) {
       testUser = new User({
-        name: 'Demo Customer',
+        firstName: 'Demo',
+        lastName: 'Customer',
+        name: 'Demo Customer', // If your model uses 'name'
         email: 'customer@example.com',
         password: 'password123',
-        role: 'customer'
+        role: 'customer',
+        mobile: '9999999999', // Add required mobile
+        dob: new Date('1990-01-01') // Add required dob
       });
       await testUser.save();
     }
