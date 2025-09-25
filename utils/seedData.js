@@ -8,7 +8,111 @@ const ContactInfo = require('../models/ContactInfo');
 const Portfolio = require('../models/Portfolio');
 const Dashboard = require('../models/Dashboard');
 const User = require('../models/User');
+const Research = require('../models/Research'); // <-- added Research model
 require('dotenv').config();
+
+// Seed Research Data
+const seedResearchData = async () => {
+  try {
+    await Research.deleteMany({});
+
+    const researchPapers = [
+      {
+        title: "Advancements in AI-Powered Predictive Analytics",
+        slug: "advancements-ai-powered-predictive-analytics",
+        abstract: "This research explores the latest developments in artificial intelligence for predictive analytics, focusing on machine learning algorithms and their applications in business intelligence.",
+        content: "Full research content here...",
+        category: "AI & Machine Learning",
+        tags: ["AI", "Machine Learning", "Predictive Analytics", "Data Science"],
+        author: "Dr. Sarah Chen",
+        authorBio: "Senior AI Researcher with 10+ years of experience in machine learning and data analytics.",
+        featuredImage: {
+          url: "/images/research/ai-predictive-analytics.jpg",
+          caption: "AI Predictive Analytics Framework",
+          alt: "AI Predictive Analytics"
+        },
+        pdfUrl: "/research/papers/ai-predictive-analytics.pdf",
+        githubUrl: "https://github.com/codenexin/ai-predictive-analytics",
+        isFeatured: true,
+        viewCount: 2450,
+        downloadCount: 890,
+        citations: 45,
+        metaDescription: "Explore cutting-edge AI techniques for predictive analytics and business intelligence.",
+        keywords: ["AI", "Predictive Analytics", "Machine Learning", "Business Intelligence"]
+      },
+      {
+        title: "Blockchain Technology in Supply Chain Management",
+        slug: "blockchain-technology-supply-chain-management",
+        abstract: "Investigating the impact of blockchain technology on supply chain transparency, efficiency, and security across various industries.",
+        content: "Full research content here...",
+        category: "Blockchain",
+        tags: ["Blockchain", "Supply Chain", "Transparency", "Security"],
+        author: "Prof. Michael Rodriguez",
+        authorBio: "Blockchain expert and supply chain consultant with extensive industry experience.",
+        featuredImage: {
+          url: "/images/research/blockchain-supply-chain.jpg",
+          caption: "Blockchain in Supply Chain",
+          alt: "Blockchain Supply Chain"
+        },
+        pdfUrl: "/research/papers/blockchain-supply-chain.pdf",
+        isFeatured: true,
+        viewCount: 1870,
+        downloadCount: 650,
+        citations: 32,
+        metaDescription: "How blockchain technology is revolutionizing supply chain management practices.",
+        keywords: ["Blockchain", "Supply Chain", "Transparency", "Logistics"]
+      },
+      {
+        title: "Cloud-Native Architecture Best Practices",
+        slug: "cloud-native-architecture-best-practices",
+        abstract: "Comprehensive guide to designing and implementing cloud-native architectures for scalable and resilient applications.",
+        content: "Full research content here...",
+        category: "Cloud Computing",
+        tags: ["Cloud Computing", "Microservices", "DevOps", "Scalability"],
+        author: "Emily Watson",
+        authorBio: "Cloud architect and DevOps specialist with expertise in cloud-native technologies.",
+        featuredImage: {
+          url: "/images/research/cloud-native-architecture.jpg",
+          caption: "Cloud Native Architecture",
+          alt: "Cloud Native Architecture"
+        },
+        pdfUrl: "/research/papers/cloud-native-architecture.pdf",
+        githubUrl: "https://github.com/codenexin/cloud-native-examples",
+        viewCount: 3210,
+        downloadCount: 1120,
+        citations: 67,
+        metaDescription: "Best practices for building scalable cloud-native applications.",
+        keywords: ["Cloud Native", "Microservices", "DevOps", "Scalability"]
+      },
+      {
+        title: "Cybersecurity Threats in IoT Ecosystems",
+        slug: "cybersecurity-threats-iot-ecosystems",
+        abstract: "Analysis of emerging cybersecurity threats in Internet of Things ecosystems and strategies for mitigation.",
+        content: "Full research content here...",
+        category: "Cybersecurity",
+        tags: ["Cybersecurity", "IoT", "Threat Analysis", "Security"],
+        author: "Dr. James Kim",
+        authorBio: "Cybersecurity researcher specializing in IoT security and threat intelligence.",
+        featuredImage: {
+          url: "/images/research/iot-cybersecurity.jpg",
+          caption: "IoT Cybersecurity Framework",
+          alt: "IoT Cybersecurity"
+        },
+        pdfUrl: "/research/papers/iot-cybersecurity.pdf",
+        viewCount: 1560,
+        downloadCount: 540,
+        citations: 28,
+        metaDescription: "Understanding and mitigating cybersecurity threats in IoT environments.",
+        keywords: ["Cybersecurity", "IoT", "Threat Analysis", "Security"]
+      }
+    ];
+
+    await Research.insertMany(researchPapers);
+    console.log('✅ Research data seeded successfully');
+  } catch (error) {
+    console.error('❌ Error seeding research data:', error);
+  }
+};
 
 // Seed About Page Data
 const seedAboutData = async () => {
@@ -827,6 +931,7 @@ const seedData = async () => {
     await ContactInfo.deleteMany({});
     await Portfolio.deleteMany({});
     await Dashboard.deleteMany({});
+    await Research.deleteMany({}); // ensure Research collection is cleared too
 
     // Create default home content
     const homeContent = new Home({
@@ -1172,6 +1277,9 @@ const seedData = async () => {
 
     // Seed portfolio page data
     await seedPortfolioData();
+
+    // Seed research data
+    await seedResearchData();
 
     // Seed dashboard data
     await seedDashboardData();
