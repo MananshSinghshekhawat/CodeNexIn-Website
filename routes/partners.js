@@ -1,60 +1,20 @@
 const express = require('express');
 const router = express.Router();
-const Partner = require('../models/Partner');
+const partnerController = require('../controllers/partnerController');
 
 // Create Partner
-router.post('/', async (req, res) => {
-    try {
-        const partner = new Partner(req.body);
-        await partner.save();
-        res.status(201).json(partner);
-    } catch (err) {
-        res.status(400).json({ message: err.message });
-    }
-});
+router.post('/', partnerController.createPartner);
 
-// Get all Partners
-router.get('/', async (req, res) => {
-    try {
-        const partners = await Partner.find();
-        res.json(partners);
-    } catch (err) {
-        res.status(500).json({ message: err.message });
-    }
-});
+// Get all Partners (supports ?page=&limit=&q=)
+router.get('/', partnerController.getAllPartners);
 
 // Get Partner by ID
-router.get('/:id', async (req, res) => {
-    try {
-        const partner = await Partner.findById(req.params.id);
-        if (!partner) return res.status(404).json({ message: 'Partner not found' });
-        res.json(partner);
-    } catch (err) {
-        res.status(500).json({ message: err.message });
-    }
-});
+router.get('/:id', partnerController.getPartnerById);
 
 // Update Partner
-router.put('/:id', async (req, res) => {
-    try {
-        const partner = await Partner.findByIdAndUpdate(req.params.id, req.body, { new: true });
-        if (!partner) return res.status(404).json({ message: 'Partner not found' });
-        res.json(partner);
-    } catch (err) {
-        res.status(400).json({ message: err.message });
-    }
-});
+router.put('/:id', partnerController.updatePartner);
 
 // Delete Partner
-router.delete('/:id', async (req, res) => {
-    try {
-        const partner = await Partner.findByIdAndDelete(req.params.id);
-        if (!partner) return res.status(404).json({ message: 'Partner not found' });
-        res.json({ message: 'Partner deleted successfully' });
-    } catch (err) {
-        res.status(500).json({ message: err.message });
-    }
-});
+router.delete('/:id', partnerController.deletePartner);
 
 module.exports = router;
-

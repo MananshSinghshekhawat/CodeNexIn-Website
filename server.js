@@ -28,6 +28,7 @@ const portfolioRoutes = require('./routes/portfolio');
 const dashboardRoutes = require('./routes/dashboard'); 
 const authRoutes = require('./routes/auth');
 const researchRoutes = require('./routes/research'); 
+const partnerRoutes = require('./routes/partners');
 
 // Routes
 app.use('/api/home', homeRoutes);
@@ -41,6 +42,7 @@ app.use('/api/portfolio', portfolioRoutes);
 app.use('/api/dashboard', dashboardRoutes); 
 app.use('/api/auth', authRoutes); 
 app.use('/api/research', researchRoutes); 
+app.use('/api/partners', partnerRoutes);
 
 // Basic route
 app.get('/', (req, res) => {
@@ -59,7 +61,8 @@ app.get('/', (req, res) => {
       portfolio: '/api/portfolio',
       dashboard: '/api/dashboard',
        auth: '/api/auth',
-       research: '/api/research' 
+       research: '/api/research',
+      partners: '/api/partners'
     }
   });
 });
@@ -105,5 +108,6 @@ app.listen(PORT, () => {
   console.log(` Auth API: http://localhost:${PORT}/api/auth`);
   console.log(` Health: http://localhost:${PORT}/health`);
   console.log(` Research API: http://localhost:${PORT}/api/research`);
+  console.log(` Partners API: http://localhost:${PORT}/api/partners`);
   console.log(' ========================================\n');
 });

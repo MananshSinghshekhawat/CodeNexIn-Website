@@ -8,7 +8,8 @@ const ContactInfo = require('../models/ContactInfo');
 const Portfolio = require('../models/Portfolio');
 const Dashboard = require('../models/Dashboard');
 const User = require('../models/User');
-const Research = require('../models/Research'); // <-- added Research model
+const Research = require('../models/Research'); 
+const Partner = require('../models/Partner');
 require('dotenv').config();
 
 // Seed Research Data
@@ -108,9 +109,42 @@ const seedResearchData = async () => {
     ];
 
     await Research.insertMany(researchPapers);
-    console.log('✅ Research data seeded successfully');
+    console.log(' Research data seeded successfully');
   } catch (error) {
-    console.error('❌ Error seeding research data:', error);
+    console.error(' Error seeding research data:', error);
+  }
+};
+
+// Seed Partner Data
+const seedPartnerData = async () => {
+  try {
+    await Partner.deleteMany({});
+
+    const partners = [
+      {
+        name: 'Acme Solutions',
+        email: 'partner1@acme.com',
+        phone: '1111111111',
+        organization: 'Acme Solutions Pvt Ltd'
+      },
+      {
+        name: 'Beta Tech',
+        email: 'partner2@betatech.com',
+        phone: '2222222222',
+        organization: 'Beta Tech Inc'
+      },
+      {
+        name: 'Gamma Labs',
+        email: 'partner3@gammalabs.com',
+        phone: '3333333333',
+        organization: 'Gamma Labs'
+      }
+    ];
+
+    await Partner.insertMany(partners);
+    console.log(' Partner data seeded successfully');
+  } catch (error) {
+    console.error(' Error seeding partner data:', error);
   }
 };
 
@@ -931,7 +965,9 @@ const seedData = async () => {
     await ContactInfo.deleteMany({});
     await Portfolio.deleteMany({});
     await Dashboard.deleteMany({});
-    await Research.deleteMany({}); // ensure Research collection is cleared too
+    await Research.deleteMany({}); 
+    await Partner.deleteMany({});
+
 
     // Create default home content
     const homeContent = new Home({
@@ -1283,6 +1319,10 @@ const seedData = async () => {
 
     // Seed dashboard data
     await seedDashboardData();
+
+    await seedResearchData();
+    
+    await seedPartnerData();
 
     console.log('Database seeded successfully!');
     console.log('You can now start the server with: npm run dev');
