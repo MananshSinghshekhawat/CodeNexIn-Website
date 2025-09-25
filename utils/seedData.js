@@ -10,6 +10,8 @@ const Dashboard = require('../models/Dashboard');
 const User = require('../models/User');
 const Research = require('../models/Research'); 
 const Partner = require('../models/Partner');
+const Event = require('../models/Event');
+
 require('dotenv').config();
 
 // Seed Research Data
@@ -145,6 +147,41 @@ const seedPartnerData = async () => {
     console.log(' Partner data seeded successfully');
   } catch (error) {
     console.error(' Error seeding partner data:', error);
+  }
+};
+
+const seedEventData = async () => {
+  try {
+    await Event.deleteMany({});
+
+    const events = [
+      {
+        title: 'AI & Cloud Summit 2025',
+        description: 'A one-day summit exploring AI and Cloud best practices.',
+        eventDate: new Date('2025-11-10T10:00:00Z'),
+        location: 'San Francisco, CA',
+        isActive: true
+      },
+      {
+        title: 'Web Dev Bootcamp',
+        description: 'Intensive 3-day workshop on full-stack web development.',
+        eventDate: new Date('2025-10-05T09:30:00Z'),
+        location: 'Online',
+        isActive: true
+      },
+      {
+        title: 'IoT Security Webinar',
+        description: 'Free webinar covering IoT threat modelling and defenses.',
+        eventDate: new Date('2025-09-30T14:00:00Z'),
+        location: 'Online',
+        isActive: true
+      }
+    ];
+
+    await Event.insertMany(events);
+    console.log(' Event data seeded successfully');
+  } catch (error) {
+    console.error(' Error seeding event data:', error);
   }
 };
 
@@ -967,6 +1004,7 @@ const seedData = async () => {
     await Dashboard.deleteMany({});
     await Research.deleteMany({}); 
     await Partner.deleteMany({});
+    await Event.deleteMany({});
 
 
     // Create default home content
@@ -1323,6 +1361,8 @@ const seedData = async () => {
     await seedResearchData();
     
     await seedPartnerData();
+
+    await seedEventData(); 
 
     console.log('Database seeded successfully!');
     console.log('You can now start the server with: npm run dev');

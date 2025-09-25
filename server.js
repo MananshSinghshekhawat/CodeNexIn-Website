@@ -29,6 +29,7 @@ const dashboardRoutes = require('./routes/dashboard');
 const authRoutes = require('./routes/auth');
 const researchRoutes = require('./routes/research'); 
 const partnerRoutes = require('./routes/partners');
+const eventRoutes = require('./routes/events');
 
 // Routes
 app.use('/api/home', homeRoutes);
@@ -43,6 +44,7 @@ app.use('/api/dashboard', dashboardRoutes);
 app.use('/api/auth', authRoutes); 
 app.use('/api/research', researchRoutes); 
 app.use('/api/partners', partnerRoutes);
+app.use('/api/events', eventRoutes);
 
 // Basic route
 app.get('/', (req, res) => {
@@ -62,7 +64,8 @@ app.get('/', (req, res) => {
       dashboard: '/api/dashboard',
        auth: '/api/auth',
        research: '/api/research',
-      partners: '/api/partners'
+      partners: '/api/partners',
+      events: '/api/events'
     }
   });
 });
@@ -103,11 +106,13 @@ app.listen(PORT, () => {
   console.log(` Home API: http://localhost:${PORT}/api/home`);
   console.log(` About API: http://localhost:${PORT}/api/about`);
   console.log(` Services API: http://localhost:${PORT}/api/services`);
+  console.log(` Contact API: http://localhost:${PORT}/api/contact`);
   console.log(` Portfolio API: http://localhost:${PORT}/api/portfolio`);
   console.log(` Dashboard API: http://localhost:${PORT}/api/dashboard`);
   console.log(` Auth API: http://localhost:${PORT}/api/auth`);
   console.log(` Health: http://localhost:${PORT}/health`);
   console.log(` Research API: http://localhost:${PORT}/api/research`);
   console.log(` Partners API: http://localhost:${PORT}/api/partners`);
+  console.log(` Events API: http://localhost:${PORT}/api/events`);
   console.log(' ========================================\n');
 });

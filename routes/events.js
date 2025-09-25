@@ -1,26 +1,21 @@
+// routes/events.js
 const express = require('express');
 const router = express.Router();
-const Event = require('../models/Event');
+const eventController = require('../controllers/eventController');
 
-// Add new event
-router.post('/add', async (req, res) => {
-  try {
-    const newEvent = new Event(req.body);
-    await newEvent.save();
-    res.status(201).json({ message: '✅ Event created successfully' });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
+// Create event
+router.post('/', eventController.createEvent);
 
-// Get all active events
-router.get('/', async (req, res) => {
-  try {
-    const events = await Event.find({ isActive: true }).sort({ eventDate: 1 });
-    res.status(200).json(events);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
+// Get all active events (supports query params page/limit/q/from/to/upcoming)
+router.get('/', eventController.getAllEvents);
+
+// Get event by id
+router.get('/:id', eventController.getEventById);
+
+// Update event
+router.put('/:id', eventController.updateEvent);
+
+// Delete event (soft delete with ?soft=true or hard delete)
+router.delete('/:id', eventController.deleteEvent);
 
 module.exports = router;
