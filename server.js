@@ -30,6 +30,8 @@ const authRoutes = require('./routes/auth');
 const researchRoutes = require('./routes/research'); 
 const partnerRoutes = require('./routes/partners');
 const eventRoutes = require('./routes/events');
+const careerRoutes = require('./routes/careers');
+
 
 // Routes
 app.use('/api/home', homeRoutes);
@@ -45,6 +47,8 @@ app.use('/api/auth', authRoutes);
 app.use('/api/research', researchRoutes); 
 app.use('/api/partners', partnerRoutes);
 app.use('/api/events', eventRoutes);
+app.use('/api/careers', careerRoutes);
+
 
 // Basic route
 app.get('/', (req, res) => {
@@ -65,7 +69,8 @@ app.get('/', (req, res) => {
        auth: '/api/auth',
        research: '/api/research',
       partners: '/api/partners',
-      events: '/api/events'
+      events: '/api/events',
+      careers: '/api/careers'
     }
   });
 });
@@ -114,5 +119,6 @@ app.listen(PORT, () => {
   console.log(` Research API: http://localhost:${PORT}/api/research`);
   console.log(` Partners API: http://localhost:${PORT}/api/partners`);
   console.log(` Events API: http://localhost:${PORT}/api/events`);
+  console.log(` Careers API: http://localhost:${PORT}/api/careers`);
   console.log(' ========================================\n');
 });

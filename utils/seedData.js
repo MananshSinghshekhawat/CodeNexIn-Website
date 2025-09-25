@@ -11,7 +11,7 @@ const User = require('../models/User');
 const Research = require('../models/Research'); 
 const Partner = require('../models/Partner');
 const Event = require('../models/Event');
-
+const Career = require('../models/Career');
 require('dotenv').config();
 
 // Seed Research Data
@@ -182,6 +182,46 @@ const seedEventData = async () => {
     console.log(' Event data seeded successfully');
   } catch (error) {
     console.error(' Error seeding event data:', error);
+  }
+};
+
+// career page data
+
+const seedCareerData = async () => {
+  try {
+    await Career.deleteMany({});
+
+    const careers = [
+      {
+        title: 'Frontend Developer',
+        description: 'Experienced in React, TypeScript and modern frontend tools.',
+        location: 'Remote',
+        employment_type: 'Full-time',
+        experience_level: 'Experienced',
+        requirements: ['React', 'TypeScript', 'HTML', 'CSS'],
+        apply_link: '',
+        posted_date: new Date('2025-08-01'),
+        closing_date: new Date('2025-12-31'),
+        isActive: true
+      },
+      {
+        title: 'Backend Intern',
+        description: 'Internship for Node.js/Express backend development.',
+        location: 'Bengaluru',
+        employment_type: 'Internship',
+        experience_level: 'Fresher',
+        requirements: ['Node.js', 'Express', 'MongoDB'],
+        apply_link: '',
+        posted_date: new Date('2025-09-01'),
+        closing_date: new Date('2025-11-30'),
+        isActive: true
+      }
+    ];
+
+    await Career.insertMany(careers);
+    console.log('✅ Career data seeded successfully');
+  } catch (error) {
+    console.error('❌ Error seeding career data:', error);
   }
 };
 
