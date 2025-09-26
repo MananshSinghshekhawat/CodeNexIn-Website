@@ -13,6 +13,7 @@ const Partner = require('../models/Partner');
 const Event = require('../models/Event');
 const Career = require('../models/Career');
 require('dotenv').config();
+const jwt = require('jsonwebtoken');
 
 // Seed Research Data
 const seedResearchData = async () => {
@@ -219,9 +220,9 @@ const seedCareerData = async () => {
     ];
 
     await Career.insertMany(careers);
-    console.log('✅ Career data seeded successfully');
+    console.log(' Career data seeded successfully');
   } catch (error) {
-    console.error('❌ Error seeding career data:', error);
+    console.error(' Error seeding career data:', error);
   }
 };
 
@@ -902,21 +903,20 @@ const seedDashboardData = async () => {
   try {
     await Dashboard.deleteMany({});
 
-    // Create a test user for dashboard
-    let testUser = await User.findOne({ email: 'customer@example.com' });
-    if (!testUser) {
-      testUser = new User({
-        firstName: 'Demo',
-        lastName: 'Customer',
-        name: 'Demo Customer', // If your model uses 'name'
-        email: 'customer@example.com',
-        password: 'password123',
-        role: 'customer',
-        mobile: '9999999999', // Add required mobile
-        dob: new Date('1990-01-01') // Add required dob
-      });
-      await testUser.save();
-    }
+    // Remove any existing test user to avoid duplicate error
+    await User.deleteMany({ email: 'customer@example.com' });
+
+    let testUser = new User({
+      firstName: 'Demo',
+      lastName: 'Customer',
+      name: 'Demo Customer', // If your model uses 'name'
+      email: 'customer@example.com',
+      password: 'password123',
+      role: 'customer',
+      mobile: '9999999999',
+      dob: new Date('1990-01-01')
+    });
+    await testUser.save();
 
     const dashboardData = new Dashboard({
       userId: testUser._id,
@@ -1045,6 +1045,8 @@ const seedData = async () => {
     await Research.deleteMany({}); 
     await Partner.deleteMany({});
     await Event.deleteMany({});
+    await Career.deleteMany({});
+    
 
 
     // Create default home content
@@ -1404,6 +1406,8 @@ const seedData = async () => {
 
     await seedEventData(); 
 
+    await seedCareerData();   
+
     console.log('Database seeded successfully!');
     console.log('You can now start the server with: npm run dev');
     process.exit(0);
@@ -1418,4 +1422,5 @@ if (require.main === module) {
   seedData();
 }
 
+module.exports = seedData;
 module.exports = seedData;

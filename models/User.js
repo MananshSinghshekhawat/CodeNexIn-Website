@@ -39,6 +39,7 @@
 
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
+const jwt = require('jsonwebtoken');
 
 const userSchema = new mongoose.Schema({
   firstName: { 
@@ -216,3 +217,38 @@ userSchema.methods.toJSON = function() {
 };
 
 module.exports = mongoose.model("User", userSchema);
+
+// Remove this example controller code from your model file.
+// Controller logic should NOT be inside the model file.
+// Move the following code to your controller (e.g., controllers/authController.js):
+
+/*
+const User = require('../models/User');
+
+const register = async (req, res) => {
+  try {
+    const { firstName, lastName, dob, email, mobile, password, confirmPassword } = req.body;
+    // Check if user exists
+    const existingUser = await User.findOne({ $or: [{ email }, { mobile }] });
+    if (existingUser) {
+      return res.status(400).json({
+        success: false,
+        message: 'User already exists with this email or mobile number'
+      });
+    }
+    // Create user if unique
+    const user = await User.create({
+      firstName,
+      lastName,
+      dob,
+      email,
+      mobile,
+      password,
+      registrationId: require('uuid').v4()
+    });
+    res.status(201).json({ success: true, user });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+*/

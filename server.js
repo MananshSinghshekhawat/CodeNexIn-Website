@@ -49,6 +49,22 @@ app.use('/api/partners', partnerRoutes);
 app.use('/api/events', eventRoutes);
 app.use('/api/careers', careerRoutes);
 
+app.get('/api/db-status', (req, res) => {
+  const status = mongoose.connection.readyState;
+  const statusMessages = {
+    0: 'Disconnected',
+    1: 'Connected', 
+    2: 'Connecting',
+    3: 'Disconnecting'
+  };
+  
+  res.json({
+    success: true,
+    status: statusMessages[status] || 'Unknown',
+    readyState: status,
+    timestamp: new Date().toISOString()
+  });
+});
 
 // Basic route
 app.get('/', (req, res) => {
@@ -70,7 +86,8 @@ app.get('/', (req, res) => {
        research: '/api/research',
       partners: '/api/partners',
       events: '/api/events',
-      careers: '/api/careers'
+      careers: '/api/careers',
+      dbStatus: '/api/db-status'
     }
   });
 });
@@ -114,11 +131,15 @@ app.listen(PORT, () => {
   console.log(` Contact API: http://localhost:${PORT}/api/contact`);
   console.log(` Portfolio API: http://localhost:${PORT}/api/portfolio`);
   console.log(` Dashboard API: http://localhost:${PORT}/api/dashboard`);
+  console.log(` Testimonials API: http://localhost:${PORT}/api/testimonials`);
+  console.log(` Blogs API: http://localhost:${PORT}/api/blogs`);
+  console.log(` Clients API: http://localhost:${PORT}/api/clients`);
   console.log(` Auth API: http://localhost:${PORT}/api/auth`);
   console.log(` Health: http://localhost:${PORT}/health`);
   console.log(` Research API: http://localhost:${PORT}/api/research`);
   console.log(` Partners API: http://localhost:${PORT}/api/partners`);
   console.log(` Events API: http://localhost:${PORT}/api/events`);
   console.log(` Careers API: http://localhost:${PORT}/api/careers`);
+  console.log(` DB Status: http://localhost:${PORT}/api/db-status`);
   console.log(' ========================================\n');
 });
